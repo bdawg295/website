@@ -44,7 +44,7 @@ header nav ul li a {
 }
 
 .hero {
-  background: url('images/hero-bg.jpg') no-repeat center center/cover;
+  background-color: #007bff; /* Replaced with solid blue background */
   color: #fff;
   text-align: center;
   padding: 4rem 2rem;
@@ -66,8 +66,8 @@ header nav ul li a {
 
 button {
   padding: 0.8rem 1.5rem;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #fff;
+  color: #007bff; /* Updated button text color */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -76,6 +76,7 @@ button {
 
 button:hover {
   background-color: #0056b3;
+  color: #fff;
 }
 
 .content-section {
@@ -85,15 +86,19 @@ button:hover {
 
 .about-content {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
 .about-image {
-  max-width: 200px;
-  border-radius: 50%;
+  max-width: 400px; /* Slightly increased image size */
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 1rem;
 }
 
 .projects-grid {
@@ -130,4 +135,13 @@ footer {
   padding: 1rem;
   background-color: #333;
   color: #fff;
+}
+
+footer a { 
+  color: #add8e6;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #ccc; /* Optional: A lighter color for hover effect */
 }
