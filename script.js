@@ -1,11 +1,6 @@
 function learnMore() {
     window.location.href = "#about";
   }
-
-  if (document.referrer === '') {
-    // Redirect if the file is being accessed directly
-    window.location.href = '/';
-  }
   
   // Check if styles.css and script.js are being directly accessed
 const verifyFileAccess = (file) => {
@@ -22,6 +17,6 @@ const verifyFileAccess = (file) => {
     });
 };
 
-// Add checks for both files
+
 verifyFileAccess('styles.css');
 verifyFileAccess('script.js');
