@@ -91,14 +91,15 @@
         </div>
 
         <!-- Contact Form -->
-        <form class="contact-form" action="https://formspree.io/f/xovqwbkl" method="POST">
+        <form class="contact-form" action="https://formspree.io/f/xovqwbkl" method="POST" onsubmit="redirectAfterSubmit(event)">
             <input type="hidden" name="_redirect" value="https://brandonwolfe.net/thank_you.html">
             <h3>Contact Me</h3>
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="_replyto" placeholder="Your Email" required>
             <textarea name="message" placeholder="Message here: Please include any details about the design you may want." rows="5" required></textarea>
             <button type="submit">Send Message</button>
-        </form>  
+        </form>
+        
         <script>
             function redirectAfterSubmit(event) {
                 event.preventDefault(); // Prevent default form submission behavior
@@ -109,18 +110,21 @@
                     method: form.method,
                     body: new FormData(form),
                     headers: { 'Accept': 'application/json' }
-                }).then(response => {
+                })
+                .then(response => {
                     if (response.ok) {
+                        // Redirect after successful CAPTCHA and form submission
                         window.location.href = "https://brandonwolfe.net/thank_you.html";
                     } else {
                         alert("There was a problem submitting your form.");
                     }
-                }).catch(error => {
+                })
+                .catch(error => {
                     alert("An error occurred. Please try again later.");
                     console.error(error);
                 });
             }
-        </script>      
+        </script>             
     </main>
 
     <footer>
