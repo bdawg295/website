@@ -93,76 +93,11 @@
         <!-- Contact Form -->
         <form class="contact-form" action="https://formspree.io/f/xovqwbkl" method="POST">
             <h3>Contact Me</h3>
-            <!-- Input fields with validation -->
-            <input 
-                type="text" 
-                name="name" 
-                placeholder="Your Name" 
-                required 
-                maxlength="50" 
-                pattern="[A-Za-z\s]+" 
-                title="Name must only contain letters and spaces.">
-                
-            <input 
-                type="email" 
-                name="_replyto" 
-                placeholder="Your Email" 
-                required 
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-                title="Please enter a valid email address.">
-                
-            <textarea 
-                name="message" 
-                placeholder="Message here: Please include any details about the design you may want." 
-                rows="5" 
-                required 
-                maxlength="500" 
-                title="Message must be 500 characters or less."></textarea>
-                
-            <!-- Submit button -->
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="_replyto" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Message here: Please include any details about the design you may want." rows="5" required></textarea>
             <button type="submit">Send Message</button>
-        </form>
-        
-        <script>
-            // Sanitize and validate inputs before submission
-            function escapeHTML(input) {
-                return input
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
-            }
-        
-            document.querySelector(".contact-form").addEventListener("submit", function (event) {
-                const nameField = document.querySelector("input[name='name']");
-                const emailField = document.querySelector("input[name='_replyto']");
-                const messageField = document.querySelector("textarea[name='message']");
-        
-                // Escape inputs
-                nameField.value = escapeHTML(nameField.value);
-                emailField.value = escapeHTML(emailField.value);
-                messageField.value = escapeHTML(messageField.value);
-        
-                // Validate Name
-                if (!/^[A-Za-z\s]+$/.test(nameField.value)) {
-                    alert("Name must only contain letters and spaces.");
-                    event.preventDefault();
-                }
-        
-                // Validate Email
-                if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(emailField.value)) {
-                    alert("Please enter a valid email address.");
-                    event.preventDefault();
-                }
-        
-                // Validate Message Length
-                if (messageField.value.length > 500) {
-                    alert("Message must be 500 characters or less.");
-                    event.preventDefault();
-                }
-            });
-        </script>        
+        </form>  
     </main>
 
     <footer>
