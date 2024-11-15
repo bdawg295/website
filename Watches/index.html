@@ -17,6 +17,7 @@
         }
         main {
             padding: 2rem;
+            text-align: center;
         }
         .image-grid {
             display: grid;
@@ -38,6 +39,15 @@
             margin-top: 2rem;
             max-width: 400px;
             width: 100%;
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form h3 {
+            margin-bottom: 1rem;
+            text-align: center;
         }
         .contact-form input,
         .contact-form textarea,
@@ -53,6 +63,7 @@
             background-color: #007bff;
             color: white;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         .contact-form button:hover {
             background-color: #0056b3;
@@ -62,10 +73,9 @@
 <body>
     <header>
         <nav>
-            <h1>Brandon Wolfe</h1>
-            <ul>
-                <li><a href="/">Home</a></li>
-            </ul>
+            <h1>
+                <a href="/" style="text-decoration: none; color: inherit;">Brandon's Watches</a>
+            </h1>
         </nav>
     </header>
 
