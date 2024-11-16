@@ -7,48 +7,73 @@
     <link rel="stylesheet" href="../styles.css"> <!-- Link to main CSS -->
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
+            font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f4f4f4;
+            color: #333;
         }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header h1 a {
+            color: white;
+            text-decoration: none;
+        }
+
         main {
             padding: 2rem;
-            text-align: center;
         }
+
+        h2 {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
         .image-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 2rem;
+            margin: 2rem 0;
+            justify-content: center;
         }
+
         .image-placeholder {
-            background-color: #f4f4f4;
+            background-color: #eaeaea;
             border: 2px dashed #ccc;
             height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 0.9rem;
-            color: #999;
+            font-size: 1rem;
+            color: #666;
+            border-radius: 5px;
         }
+
         .contact-form {
-            margin-top: 2rem;
-            max-width: 400px;
+            margin: 2rem auto;
+            max-width: 600px;
             width: 100%;
-            text-align: left;
-            background-color: #f9f9f9;
+            background-color: white;
             padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .contact-form h3 {
             margin-bottom: 1rem;
-            text-align: center;
+            font-size: 1.5rem;
+            color: #007bff;
         }
+
         .contact-form input,
         .contact-form textarea,
         .contact-form button {
@@ -59,14 +84,34 @@
             border-radius: 5px;
             font-size: 1rem;
         }
+
         .contact-form button {
             background-color: #007bff;
             color: white;
             cursor: pointer;
+            border: none;
+            font-size: 1rem;
             transition: background-color 0.3s ease;
         }
+
         .contact-form button:hover {
             background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        .social-links a {
+            margin: 0 0.5rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -74,40 +119,37 @@
     <header>
         <nav>
             <h1>
-                <a href="/" style="text-decoration: none; color: inherit;">Brandon's Watches</a>
+                <a href="/">Brandon's Watches</a>
             </h1>
         </nav>
     </header>
 
     <main>
         <h2>Watches</h2>
-        <p>Welcome to my watches page! Here, you can find watches that I've built, and a contact form if you want your own!.</p>
+        <p>Welcome to my watches page! Here, you can find watches that I've built, and a contact form if you want your own!</p>
 
-        <!-- Placeholder for Future Images -->
         <div class="image-grid">
             <div class="image-placeholder">Image Placeholder 1</div>
             <div class="image-placeholder">Image Placeholder 2</div>
             <div class="image-placeholder">Image Placeholder 3</div>
         </div>
 
-        <!-- Contact Form -->
         <form class="contact-form" action="https://formspree.io/f/xovqwbkl" method="POST">
             <h3>Contact Me</h3>
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="_replyto" placeholder="Your Email" required>
             <textarea name="message" placeholder="Message here: Please include any details about the design you may want." rows="5" required></textarea>
             <button type="submit">Send Message</button>
-        </form>  
+        </form>
     </main>
 
     <footer>
         <p>&copy; 2024 Brandon Wolfe. All rights reserved.</p>
         <div class="social-links">
-          <a href="https://instagram.com/brndadonwafelol" target="_blank" aria-label="Instagram">Instagram</a>
-          <a href="https://github.com/bdawg295" target="_blank" aria-label="GitHub">Github</a>
-          <a href="mailto:bdawg295business@outlook.com" target="_blank" aria-label="Email">Email me!</a>
+            <a href="https://instagram.com/brndadonwafelol" target="_blank" aria-label="Instagram">Instagram</a>
+            <a href="https://github.com/bdawg295" target="_blank" aria-label="GitHub">Github</a>
+            <a href="mailto:bdawg295business@outlook.com" target="_blank" aria-label="Email">Email me!</a>
         </div>
-      </footer>
-
+    </footer>
 </body>
 </html>
