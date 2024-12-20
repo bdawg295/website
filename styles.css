@@ -142,17 +142,9 @@ footer a {
   text-decoration: none;
 }
 
-a {
-  color: #add8e6; /* Or the color you prefer for your links */
-  text-decoration: none;
-}
 
 /* Visited link styles */
 a:visited {
   color: #add8e6; /* Use the same color as unvisited links to make them consistent */
 }
 
-/* Hover and active link styles */
-a:hover {
-  color: #ccc; /* Optional hover effect */
-}
