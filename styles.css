@@ -70,21 +70,6 @@ header h1 a {
   font-size: 1.2rem;
 }
 
-button {
-  padding: 0.8rem 1.5rem;
-  background-color: #fff;
-  color: #007bff; 
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-button:hover {
-  background-color: #0056b3;
-  color: #fff;
-}
-
 .content-section {
   padding: 2rem;
   text-align: center;
@@ -101,10 +86,9 @@ button:hover {
 }
 
 .about-image {
-  max-width: 400px; /* Slightly increased image size */
+  max-width: 200px; 
   height: auto;
   border-radius: 10px;
-  margin-bottom: 1rem;
 }
 
 .projects-grid {
@@ -145,7 +129,7 @@ footer {
 
 
 footer .social-links a {
-  text-decoration: none; 
+  text-decoration: underline; 
   color: #007bff; 
 }
 
@@ -153,9 +137,14 @@ footer .social-links a:hover {
   color: #0056b3; 
 }
 
-
 a:visited {
-  color: #ffffff; 
+  all: unset; 
+  color: inherit; 
 }
+
+a:hover {
+  color: #0056b3
+}
+
 
 
