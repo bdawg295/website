@@ -94,8 +94,9 @@ header h1 a:hover {
   flex-wrap: wrap;
 }
 
-.about-content:visited {
-  color: #007bff;
+
+#about a:visited {
+  color: #007bff; /* Keep it blue even after being visited */
 }
 
 .about-image {
