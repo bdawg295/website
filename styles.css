@@ -96,7 +96,11 @@ header h1 a:hover {
 
 
 #about a:visited {
-  color: #007bff; /* Keep it blue even after being visited */
+  color: #40ee; 
+}
+
+#about a:hover{
+  color: #0056b3;
 }
 
 .about-image {
