@@ -5,45 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume - Brandon Wolfe</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    .resume-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
+    body {
+      font-family: "Georgia", serif;
       background-color: #f4f4f4;
-      min-height: 100vh;
-      max-width: 800px;
-      margin: auto;
+      margin: 0;
+      padding: 0;
     }
 
-    .resume-container h2 {
+    .resume-container {
+      background-color: #fff;
+      max-width: 850px;
+      margin: 2rem auto;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .name-header {
+      text-align: center;
       font-size: 2rem;
+      font-weight: bold;
       margin-bottom: 0.5rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.5rem;
     }
 
-    .resume-container h3 {
-      margin-top: 1.5rem;
-      font-size: 1.5rem;
-      border-bottom: 2px solid #333;
+    .contact-info {
+      text-align: center;
+      font-size: 0.95rem;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .contact-info a {
+      color: inherit;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin: 2rem 0 1rem;
+      border-bottom: 1px solid #aaa;
       padding-bottom: 0.25rem;
-      width: 100%;
-    }
-
-    .resume-container h4 {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-    }
-
-    .resume-container ul {
-      list-style-type: disc;
-      padding-left: 1.5rem;
-      margin-top: 0.5rem;
       text-align: left;
     }
 
+    .section-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 1rem;
+    }
+
+    .section-entry-title {
+      font-weight: bold;
+    }
+
+    .section-entry-date {
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    ul {
+      list-style-type: circle;
+      margin: 0.5rem 0 1.5rem 1.5rem;
+      padding: 0;
+    }
+
+    ul li {
+      margin-bottom: 0.3rem;
+    }
+
     .download-button {
-      margin-top: 20px;
+      margin-top: 2rem;
       padding: 10px 20px;
       background-color: #007bff;
       color: white;
@@ -73,7 +108,20 @@
     header h1 a {
       color: white;
       text-decoration: none;
-      font-size: inherit;
+      font-size: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .social-links a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 0.5rem;
     }
   </style>
 </head>
@@ -85,24 +133,39 @@
   </header>
 
   <main class="resume-container">
-    <h2>Brandon Wolfe</h2>
-    <p>Seattle, WA | <a href="mailto:brandon@wolfedwelling.com">brandon@wolfedwelling.com</a> | <a href="tel:+1-206-295-2995">206-295-2995</a> | <a href="https://www.linkedin.com/in/bmw-cyber/">LinkedIn</a></p>
+    <div class="name-header">Brandon Wolfe</div>
+    <div class="contact-info">
+      <span>Seattle, WA</span> |
+      <a href="mailto:brandon@wolfedwelling.com"><i class="fas fa-envelope"></i> brandon@wolfedwelling.com</a> |
+      <a href="tel:+1-206-295-2995"><i class="fas fa-phone"></i> 206-295-2995</a> |
+      <a href="https://www.linkedin.com/in/bmw-cyber/"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    </div>
 
     <h3>Education</h3>
-    <p><strong>Rochester Institute of Technology</strong><br>B.S./M.S. in Cybersecurity <em>(Class of 2029)</em></p>
+    <div class="section-entry">
+      <div class="section-entry-title">Rochester Institute of Technology</div>
+      <div class="section-entry-date">Class of 2029</div>
+    </div>
+    <p>B.S./M.S. in Cybersecurity</p>
     <ul>
       <li>Related Coursework: Intro to Cybersecurity, Routing and Switching I, Software Development I &amp; II</li>
     </ul>
 
     <h3>Experience</h3>
-    <h4>Webmaster and Board Member | ISSA Puget Sound <em>(March 2023 - August 2024)</em></h4>
+    <div class="section-entry">
+      <div class="section-entry-title">Webmaster and Board Member | ISSA Puget Sound</div>
+      <div class="section-entry-date">March 2023 - August 2024</div>
+    </div>
     <ul>
       <li>Managed website through WordPress</li>
       <li>Implemented front- and back-end solutions and recommendations from board members</li>
       <li>Contributed to strategic planning for the chapter's future</li>
     </ul>
 
-    <h4>Lifeguard | Mercer Island Country Club <em>(June 2021 - June 2025)</em></h4>
+    <div class="section-entry">
+      <div class="section-entry-title">Lifeguard | Mercer Island Country Club</div>
+      <div class="section-entry-date">June 2021 - June 2025</div>
+    </div>
     <ul>
       <li>CPR/AED/Lifeguard certified June 2021; recertified March 2023 and December 2024</li>
       <li>Inspected pool equipment and facilities to maintain cleanliness and safety</li>
@@ -111,7 +174,10 @@
       <li>Accumulated 600+ hours of service</li>
     </ul>
 
-    <h4>Lifeguard | Seattle Parks and Recreation <em>(June 2024 - August 2024)</em></h4>
+    <div class="section-entry">
+      <div class="section-entry-title">Lifeguard | Seattle Parks and Recreation</div>
+      <div class="section-entry-date">June 2024 - August 2024</div>
+    </div>
     <ul>
       <li>NW test certified June 2024</li>
       <li>Ensured public safety and smooth beach operations</li>
