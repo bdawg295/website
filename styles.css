@@ -12,6 +12,7 @@ body {
   line-height: 1.6;
 }
 
+/* Header */
 header {
   background-color: #333;
   color: #fff;
@@ -21,7 +22,6 @@ header {
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 
 header nav {
   display: flex;
@@ -33,9 +33,9 @@ header nav {
 header nav ul {
   list-style: none;
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: flex-end; 
-  gap: 1rem; 
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 header nav ul li a {
@@ -45,19 +45,18 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
-  color: #787a7d; 
+  color: #787a7d;
 }
 
 header h1 a {
-  text-decoration: none; 
-  color: #fff; 
+  text-decoration: none;
+  color: #fff;
   font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.5rem;
 }
 
-header h1 a:hover {
-  color: #787a7d; 
-}
-
+/* Hero Section */
 .hero {
   background-color: #007bff;
   color: #fff;
@@ -79,6 +78,7 @@ header h1 a:hover {
   font-size: 1.2rem;
 }
 
+/* Content Sections */
 .content-section {
   padding: 2rem;
   text-align: center;
@@ -94,17 +94,16 @@ header h1 a:hover {
   flex-wrap: wrap;
 }
 
-
 #about a:visited {
-  color: #40ee; 
+  color: #40ee;
 }
 
-#about a:hover{
+#about a:hover {
   color: #0056b3;
 }
 
 .about-image {
-  max-width: 200px; 
+  max-width: 200px;
   height: auto;
   border-radius: 10px;
 }
@@ -138,31 +137,41 @@ header h1 a:hover {
   padding: 0 1rem 1rem;
 }
 
+/* Footer */
 footer {
   text-align: center;
-  padding: 1rem;
   background-color: #333;
-  color: #ffffff;
+  color: white;
+  padding: 1rem 0;
+  font-size: 0.9rem;
 }
 
+footer .social-links {
+  margin-top: 0.5rem;
+}
 
 footer .social-links a {
-  text-decoration: underline; 
-  color: #007bff; 
+  color: #007bff;
+  text-decoration: underline;
+  margin: 0 0.5rem;
+  font-size: inherit;
 }
 
-footer .social-links a:hover {
-  color: #0056b3; 
-}
-
+/* Global Links */
 a:visited {
-  all: unset; 
-  color: inherit; 
+  all: unset;
+  color: inherit;
 }
 
 a:hover {
   color: #0056b3;
 }
 
+/* Extra for resume-specific */
+.contact-info a {
+  text-decoration: underline;
+}
 
-
+.contact-info a[href^="tel:"] {
+  text-decoration: none;
+}
