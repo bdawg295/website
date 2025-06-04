@@ -38,10 +38,6 @@ header nav ul {
   gap: 1rem; 
 }
 
-/* header nav ul li {
-  margin-left: 1rem;
-} */
-
 header nav ul li a {
   color: #fff;
   text-decoration: none;
