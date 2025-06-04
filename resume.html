@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Brandon Wolfe</title>
+  <link rel="stylesheet" href="styles.css"> 
+  <style>
+    .resume-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      background-color: #f4f4f4;
+      min-height: 100vh;
+    }
+    .resume-container iframe {
+      width: 100%;
+      height: 90vh;
+      border: none;
+      max-width: 800px;
+    }
+    iframe {
+    width: 100%;
+    max-width: 800px;
+    height: 80vh; 
+    border: none;
+  }
+    .download-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      display: inline-block
+    }
+    .download-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1><a href="/">Brandon Wolfe</a></h1>
+    </nav>
+  </header>
+
+  <main class="resume-container">
+    <h2>My Resume</h2>
+    <iframe src="Brandon_Wolfe_Resume.pdf" title="Resume PDF"></iframe>
+    <a href="Brandon_Wolfe_Resume.pdf" download class="download-button">Download Resume</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Brandon Wolfe. All rights reserved.</p>
+  </footer>
+</body>
+</html>
