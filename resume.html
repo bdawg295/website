@@ -55,20 +55,34 @@
     header nav ul li a:hover {
     color: #787a7d;
     }
+    header h1 {
+    margin: 0;
+    font-size: 2.5rem; 
+    }
+
+    header h1 a {
+    color: white;
+    text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-        </ul>
-    </nav>
-  </header>
+    <header>
+        <nav>
+          <h1>
+            <a href="/">Home</a>
+          </h1>
+        </nav>
+      </header>
 
   <main class="resume-container">
     <h2>My Resume!</h2>
-    <iframe src="Brandon_Wolfe_Resume.pdf" title="Resume PDF"></iframe>
+    <iframe 
+        src="https://docs.google.com/gview?url=https://brandonwolfe.net/Brandon_Wolfe_Resume.pdf&embedded=true" 
+        style="width:100%; height:90vh;" 
+        frameborder="0" 
+        title="Resume PDF">
+    </iframe>
     <a href="Brandon_Wolfe_Resume.pdf" download class="download-button">Download Resume</a>
   </main>
 
