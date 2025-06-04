@@ -27,16 +27,20 @@ header nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 header nav ul {
   list-style: none;
   display: flex;
+  flex-wrap: wrap; 
+  justify-content: flex-end; 
+  gap: 1rem; 
 }
 
-header nav ul li {
+/* header nav ul li {
   margin-left: 1rem;
-}
+} */
 
 header nav ul li a {
   color: #fff;
