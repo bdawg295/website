@@ -14,6 +14,27 @@
       padding: 0;
     }
 
+    header {
+      background-color: #333;
+      color: white;
+      padding: 1rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header h1 a {
+      color: white;
+      text-decoration: none;
+      font-family: 'Arial', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
     .download-button-container {
       text-align: center;
       margin: 2rem 0;
@@ -62,8 +83,9 @@
       text-decoration: underline;
       margin: 0 0.5rem;
     }
+
     .contact-info a[href^="tel:"] {
-    text-decoration: none;
+      text-decoration: none;
     }
 
     h3 {
@@ -100,27 +122,6 @@
       margin-bottom: 0.3rem;
     }
 
-    header nav {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #333;
-      padding: 1rem 2rem;
-    }
-
-    header h1 {
-      margin: 0;
-    }
-
-    header h1 a {
-      color: white;
-      text-decoration: none;
-      font-size: inherit;
-      font-family: 'Arial', sans-serif;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
     footer {
       text-align: center;
       background-color: #333;
@@ -130,7 +131,7 @@
     }
 
     .social-links {
-    margin-top: 0.5rem;
+      margin-top: 0.5rem;
     }
 
     .social-links a {
@@ -141,13 +142,9 @@
   </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>
-                <a href="/">Home</a>
-            </h1>
-        </nav>
-    </header>
+  <header>
+    <h1><a href="/">Home</a></h1>
+  </header>
 
   <div class="download-button-container">
     <a href="Brandon_Wolfe_Resume.pdf" download class="download-button">Download Resume</a>
