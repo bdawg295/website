@@ -20,12 +20,6 @@
       border: none;
       max-width: 800px;
     }
-    iframe {
-    width: 100%;
-    max-width: 800px;
-    height: 80vh; 
-    border: none;
-  }
     .download-button {
       margin-top: 20px;
       padding: 10px 20px;
@@ -40,12 +34,35 @@
       background-color: #0056b3;
       color: white;
     }
+    header nav {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    }
+
+    header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    }
+
+    header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    }
+
+    header nav ul li a:hover {
+    color: #787a7d;
+    }
   </style>
 </head>
 <body>
   <header>
     <nav>
-        <h1><a href="/">Home</a></h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
     </nav>
   </header>
 
