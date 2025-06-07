@@ -43,8 +43,12 @@ header nav ul {
 header nav ul li a {
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
-  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+  margin-right: 1rem;
+}
+header nav ul li:last-child {
+  margin-right: 0; 
 }
 
 header nav ul li a:hover {
