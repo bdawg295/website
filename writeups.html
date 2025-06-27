@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writeups – Brandon Wolfe</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .writeups-container {
+      background-color: #fff;
+      max-width: 850px;
+      margin: 2rem auto;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .writeups-container h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .writeups-container p {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* grid of cards */
+    .writeup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .writeup-card {
+      background: #fafafa;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+    .writeup-card:hover {
+      transform: translateY(-4px);
+    }
+    .writeup-card h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .writeup-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .writeup-card a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #333;
+      color: white;
+      padding: 1rem 0;
+      margin-top: 2rem;
+    }
+    .social-links {
+      margin-top: 0.5rem;
+    }
+    .social-links a {
+      color: white;
+      margin: 0 0.5rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    
+
+  <header>
+    <nav style="justify-content: center;">
+      <h1><a href="/">Home</a></h1>
+    </nav>
+  </header>
+
+  <main class="writeups-container">
+    <h2>Challenge Writeups</h2>
+    <p>Click any card below to view or download the full PDF. ** This will be updated when I am back from vacation.</p>
+
+    <div class="writeup-grid">
+      <div class="writeup-card">
+        <a href="writeups/juche-jaguar-graphql-heist.pdf" target="_blank">
+          <h4>Juche Jaguar GraphQL Heist, DoD Cyber Sentinel June 2025, Hard Challenge</h4>
+          <p>SSRF + GraphQL introspection exploit writeup.</p>
+        </a>
+      </div>
+      <div class="writeup-card">
+        <a href="writeups/rotor-cipher-decrypt.pdf" target="_blank">
+          <h4>2(title)</h4>
+          <p>Description</p>
+        </a>
+      </div>
+      <div class="writeup-card">
+        <a href="writeups/idor-pizza-discount.pdf" target="_blank">
+          <h4>3(title)</h4>
+          <p>Description</p>
+        </a>
+      </div>
+      <!-- add more cards as needed -->
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Brandon Wolfe. All rights reserved.</p>
+    <div class="social-links">
+      <a href="https://github.com/bdawg295" target="_blank" aria-label="GitHub">Github</a>
+      <a href="mailto:brandon@wolfedwelling.com" aria-label="Email">Email me!</a>
+      <a href="https://www.linkedin.com/in/bmw-cyber/" target="_blank" aria-label="LinkedIn">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
