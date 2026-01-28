@@ -2,6 +2,7 @@
   const initMatrix = () => {
     const canvas = document.getElementById("matrix-canvas");
     if (!canvas) return;
+    if (window.matchMedia("(max-width: 720px)").matches) return;
 
     const ctx = canvas.getContext("2d");
     const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@%&*+?<>[]{}";
@@ -70,9 +71,9 @@
     const onHome = page === "home";
     return [
       { label: "About", href: onHome ? "#about" : "/index.html#about" },
-      { label: "Writeups", href: "/writeups.html" },
-      { label: "Contact", href: onHome ? "#contact" : "/index.html#contact" },
-      { label: "Resume", href: "/resume.html" }
+      { label: "Resume", href: "/resume.html" },
+      { label: "Projects", href: onHome ? "#projects" : "/index.html#projects" },
+      { label: "Contact", href: onHome ? "#contact" : "/index.html#contact" }
     ];
   };
 
@@ -227,7 +228,7 @@
   const ProjectsStrip = () =>
     h(
       "section",
-      { className: "section projects-strip" },
+      { className: "section projects-strip", id: "projects" },
       h("div", { className: "section-header" },
         h("h2", null, "Projects"),
         h("p", { className: "section-sub" }, "A few highlights from my hands-on work.")

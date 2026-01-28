@@ -412,6 +412,8 @@ img {
   padding: 2rem;
   display: grid;
   gap: 1rem;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .resume-header {
@@ -448,6 +450,8 @@ img {
   gap: 0.5rem;
   color: var(--muted);
   font-size: 0.95rem;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .resume-contact a {
