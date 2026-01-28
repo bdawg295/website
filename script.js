@@ -213,6 +213,8 @@
             src: "images/IMG_9405.jpg",
             alt: "Brandon Wolfe",
             className: "about-image",
+            width: 2172,
+            height: 2866,
             loading: "lazy",
             decoding: "async"
           })
