@@ -55,6 +55,17 @@
 
   const h = React.createElement;
 
+  const getRippleOffset = (durationSeconds) => {
+    const key = "rippleStartTs";
+    const stored = sessionStorage.getItem(key);
+    const start = stored ? Number(stored) : Date.now();
+    if (!stored) {
+      sessionStorage.setItem(key, String(start));
+    }
+    const elapsed = (Date.now() - start) / 1000;
+    return elapsed % durationSeconds;
+  };
+
   const navLinks = (page) => {
     const onHome = page === "home";
     return [
@@ -65,35 +76,71 @@
     ];
   };
 
-  const Header = ({ page }) =>
-    h(
-      "header",
-      { className: "site-header" },
+  const rippleText = (text, baseDelay = 0, offset = 0) =>
+    text.split("").map((char, index) =>
       h(
-        "nav",
-        { className: "nav" },
-        h(
-          "a",
-          { className: "brand", href: "/index.html" },
-          h("span", { className: "brand-text" }, "Brandon Wolfe")
-        ),
-        h(
-          "div",
-          { className: "nav-links" },
-          navLinks(page).map((link) =>
-            h(
-              "a",
-              {
-                key: link.label,
-                href: link.href,
-                className: "nav-link"
-              },
-              link.label
-            )
-          )
-        )
+        "span",
+        {
+          key: `ripple-${text}-${index}`,
+          className: "ripple-letter",
+          style: { animationDelay: `${baseDelay + index * 0.06 - offset}s` }
+        },
+        char === " " ? "\u00A0" : char
       )
     );
+
+  const Header = ({ page }) => {
+    const brandText = "Brandon Wolfe";
+    const letterStep = 0.06;
+    const gap = 0.01;
+    const baseStart = brandText.length * letterStep + gap;
+    const links = navLinks(page);
+    const lastLink = links[links.length - 1];
+    const lastLinkIndex = links.length - 1;
+    const lastLinkDelay = baseStart + lastLinkIndex * (lastLink.label.length * letterStep + gap);
+    const lastLetterDelay = lastLinkDelay + (lastLink.label.length - 1) * letterStep;
+    const totalDuration = Number((lastLetterDelay + 1.5).toFixed(2));
+    const rippleOffset = getRippleOffset(totalDuration);
+
+    const nav = h(
+      "nav",
+      {
+        className: "nav",
+        style: { "--ripple-duration": `${totalDuration}s` }
+      },
+      h(
+        "a",
+        {
+          className: "brand",
+          href: "/index.html",
+          onClick: (event) => {
+            if (page === "home") {
+              event.preventDefault();
+            }
+          }
+        },
+        h("span", { className: "brand-text" }, rippleText(brandText, 0, rippleOffset))
+      ),
+      h(
+        "div",
+        { className: "nav-links" },
+        links.map((link, linkIndex) => {
+          const delay = baseStart + linkIndex * (link.label.length * letterStep + gap);
+          return h(
+            "a",
+            {
+              key: link.label,
+              href: link.href,
+              className: "nav-link"
+            },
+            rippleText(link.label, delay, rippleOffset)
+          );
+        })
+      )
+    );
+
+    return h("header", { className: "site-header" }, nav);
+  };
 
   const Hero = () =>
     h(
@@ -106,7 +153,7 @@
           h(
             "p",
             { className: "hero-sub" },
-            "RIT cybersecurity student focused on competition, practical defense, and building things."
+            "RIT cybersecurity student focused on forensics, practical defense, and building things."
           ),
           h(
             "p",
@@ -120,24 +167,19 @@
               "a",
               { className: "button primary", href: "/resume.html" },
               "View Resume"
-            ),
-            h(
-              "a",
-              { className: "button ghost", href: "/writeups.html" },
-              "Read Writeups"
             )
           )
         ),
         h("div", { className: "hero-panel" },
           h("div", { className: "panel-line" }, "Status: ACTIVE"),
           h("div", { className: "panel-title" }, "Focus"),
-          h(
-            "ul",
-            { className: "panel-list" },
-            h("li", null, "Forensics"),
-            h("li", null, "Incident Response"),
-            h("li", null, "Networking")
-          )
+            h(
+              "ul",
+              { className: "panel-list" },
+              h("li", null, "Forensics"),
+            h("li", null, "Networking"),
+              h("li", null, "Incident Response")
+            )
         )
       )
     );
@@ -148,7 +190,6 @@
       { id: "about", className: "section" },
       h("div", { className: "section-header" },
         h("h2", null, "About Me"),
-        h("p", { className: "section-sub" }, "Cybersecurity student, competitor, and builder.")
       ),
       h(
         "div",
@@ -166,22 +207,50 @@
           h(
             "p",
             null,
-            "Hi! I'm Brandon, a sophomore at RIT majoring in cybersecurity. I'm active in RIT's main cybersecurity club, where I participate in Physical Vulnerability and Incident Response groups. I also play for the men's ultimate frisbee B team where I'm treasurer and safety officer and am involved in the car club. I regularly compete in cybersecurity competitions - most recently, I placed 10th out of about 2,100 participants in the DoD Cyber Sentinel for June 2025 and won $500 USD. I write up some of my competition challenges, which you can read ",
+            "Hi! I'm Brandon, a sophomore at RIT majoring in Cyber and minoring in Criminal Justice. I'm active in RIT's main cybersecurity club, where I participate in Physical Vulnerability and Incident Response groups. I also play for the men's ultimate frisbee B team where I'm treasurer and safety officer. I regularly compete in cybersecurity competitions - most recently, I placed 10th out of about 2,100 participants in the DoD Cyber Sentinel for June 2025 and won $500 USD. I write up some of my competition challenges, which you can read ",
             h("a", { href: "/writeups.html" }, "here"),
             "."
           ),
           h(
             "p",
             null,
-            "Outside of school, I enjoy rock climbing and building watches. Lately I've been into forensics and wallet/leatherwork, and I'm also working on a red team tool, so I spend time experimenting and iterating outside of class."
+            "Outside of school, I really enjoy rock climbing and reading. I also like to build things. Most recently, I've been into wallets and leatherwork, and I spend time on my homelab. I'm also working on a red team tool, but it's not ready to release yet. I'm from the beautiful state of Washington but I go to school in Rochester, NY."
           ),
           h(
             "p",
             null,
-            "I'm currently seeking a Summer 2026 co-op or internship. Feel free to view my ",
+            "I'm also seeking 2026 co-op or internship opportunities. Feel free to view my ",
             h("a", { href: "/resume.html" }, "resume"),
-            " or reach out via the contact info below."
+            " or reach out via the contact info ",
+            h("a", { href: "#contact" }, "below"),
+            "."
           )
+        )
+      )
+    );
+
+  const ProjectsStrip = () =>
+    h(
+      "section",
+      { className: "section projects-strip" },
+      h("div", { className: "section-header" },
+        h("h2", null, "Projects"),
+        h("p", { className: "section-sub" }, "A few highlights from my hands-on work.")
+      ),
+      h(
+        "div",
+        { className: "card-grid" },
+        h(
+          "a",
+          { className: "card", href: "/resume.html#resume-projects-homelab" },
+          h("h3", null, "Homelab | System Monitoring and Virtualization"),
+          h("p", null, "Proxmox, network monitoring stack, DNS filtering, and remote access.")
+        ),
+        h(
+          "a",
+          { className: "card", href: "/resume.html#resume-projects-elk" },
+          h("h3", null, "ELK SIEM Deployment"),
+          h("p", null, "Multi-host ELK stack with log forwarding and tuned alerting.")
         )
       )
     );
@@ -232,7 +301,7 @@
             rel: "noopener noreferrer"
           },
           h("h3", null, "Juche Jaguar GraphQL Heist, DoD Cyber Sentinel June 2025, Hard Challenge"),
-          h("p", null, "SSRF + GraphQL introspection exploit writeup.")
+          h("p", null, "SSRF + GraphQL introspection writeup.")
         )
       )
     );
@@ -240,134 +309,187 @@
   const Resume = () =>
     h(
       "section",
-      { className: "section" },
-      h("div", { className: "section-header" },
+      { className: "section resume-section" },
+      h("div", { className: "section-header resume-header" },
         h("h2", null, "Resume"),
-        h("p", { className: "section-sub" }, "The downloadable PDF is much prettier and fully formatted.")
-      ),
-      h(
-        "div",
-        { className: "resume-actions" },
-        h(
-          "a",
-          { href: "Wolfe_Brandon_Resume.pdf", download: true, className: "button primary" },
-          "Download Resume (PDF)"
-        )
       ),
       h(
         "div",
         { className: "resume-card" },
-        h("h3", { className: "resume-name" }, "Brandon Wolfe"),
+        h(
+          "div",
+          { className: "resume-top" },
+          h("h3", { className: "resume-name" }, "Brandon Wolfe"),
+          h(
+            "a",
+            { href: "Wolfe_Brandon_Resume.pdf", download: true, className: "button primary resume-download" },
+            "Download Resume (PDF)"
+          )
+        ),
         h(
           "div",
           { className: "resume-contact" },
-          h("span", null, "Seattle, WA"),
-          h("span", { className: "divider" }, "|") ,
-          h("a", { href: "mailto:brandon@wolfedwelling.com" }, "brandon@wolfedwelling.com"),
+          h("span", null, "Seattle, Washington"),
           h("span", { className: "divider" }, "|"),
-          h("a", { href: "tel:+1-206-295-2995" }, "206-295-2995"),
+          h("a", { href: "mailto:brandon@wolfedwelling.com" }, "brandon@wolfedwelling.com"),
           h("span", { className: "divider" }, "|"),
           h(
             "a",
             { href: "https://www.linkedin.com/in/bmw-cyber/", target: "_blank", rel: "noopener noreferrer" },
             "LinkedIn"
-          )
+          ),
+          h("span", { className: "divider" }, "|"),
+          h("a", { href: "tel:+1-206-295-2995" }, "206-295-2995")
+        ),
+        h("h4", { className: "resume-section" }, "Objective"),
+        h(
+          "p",
+          { className: "resume-sub resume-sub-strong" },
+          "Seeking an internship in Cybersecurity or Information Security, with interests in Forensics, SOC and NOC operations, SIEMs, and Networking."
         ),
         h("h4", { className: "resume-section" }, "Education"),
         h(
           "div",
           { className: "resume-row" },
           h("span", { className: "resume-title" }, "Rochester Institute of Technology"),
-          h("span", { className: "resume-date" }, "Class of 2029")
+          h("span", { className: "resume-date" }, "Expected Dec. 2027")
         ),
-        h("p", { className: "resume-sub" }, "B.S./M.S. in Cybersecurity"),
+        h(
+          "div",
+          { className: "resume-row" },
+        h("span", { className: "resume-sub resume-sub-strong" }, "Bachelor of Science in Cybersecurity, Minoring in Criminal Justice"),
+          h("span", { className: "resume-date" }, "GPA: 3.11")
+        ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Related Coursework: Intro to Cybersecurity, Routing and Switching I, Software Development I & II")
+          h("li", null, "Relevant Coursework: Routing and Switching I, Software Development I & II, C & Assembly Programming, Reverse Engineering Fundamentals, Systems Administration I, Networking Services")
+        ),
+        h("h4", { className: "resume-section", id: "resume-projects" }, "Projects"),
+        h(
+          "div",
+          { className: "resume-row resume-anchor", id: "resume-projects-homelab" },
+          h("span", { className: "resume-title" }, "Homelab | System Monitoring and Virtualization"),
+          h("span", { className: "resume-date" }, "Aug 2025 - Present")
+        ),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Deployed Proxmox for isolated virtual machines and N8n hosting"),
+          h("li", null, "Built a network monitoring stack using ntopng, InfluxDB, and Grafana on Ubuntu Server"),
+          h("li", null, "Configured port mirroring for full LAN traffic capture and visualization"),
+          h("li", null, "Deployed Pi-hole and Unbound for internal DNS resolution and network-wide ad blocking, and Tailscale for remote access")
+        ),
+        h(
+          "div",
+          { className: "resume-row resume-anchor", id: "resume-projects-elk" },
+          h("span", { className: "resume-title" }, "ELK SIEM Deployment | RITSEC SIEM Interest Group"),
+          h("span", { className: "resume-date" }, "Sept 2025 - Dec 2025")
+        ),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Deployed and configured ELK stack (Elasticsearch, Logstash, Kibana) across Linux and Windows hosts"),
+          h("li", null, "Established log forwarding and service monitoring for multi host visibility"),
+          h("li", null, "Tuned dashboards and notifications for efficient alerting and event correlation")
+        ),
+        h("h4", { className: "resume-section" }, "Extracurriculars"),
+        h("h5", { className: "resume-subhead" }, "Competitions and Challenges"),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "DoD Cyber Sentinel 2025 — Top 10 (individual, #10/2100); solved web exploitation, crypto, OSINT, and forensics challenges including SSRF exploit writeup"),
+          h("li", null, "Eaton CTF 2025 — 1st place (team, 1/16); memory forensics, crypto, and web exploitation"),
+          h("li", null, "Bugcrowd Student Finale CTF 2025 — 12/66 (team); crypto and forensics challenges"),
+          h("li", null, "NCAE Cyber 2025 — 2nd place (team, East Overflow)"),
+          h("li", null, "CyberPatriot XVI — Platinum Tier (Top 150); Linux and Windows system hardening under timed scoring")
+        ),
+        h("h5", { className: "resume-subhead" }, "Clubs"),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Active member of RITSEC: SIEM Interest Group, Physical Security and Incident Response Groups; focus on lockpicking, bypassing, and incident analysis")
+        ),
+        h(
+          "div",
+          { className: "resume-row" },
+          h("span", { className: "resume-title" }, "Treasurer and Safety Officer | Ultimate Frisbee B Team"),
+          h("span", { className: "resume-date" }, "2025 - Present")
+        ),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Managing team budgeting, equipment procurement, and player safety protocols")
         ),
         h("h4", { className: "resume-section" }, "Experience"),
         h(
           "div",
           { className: "resume-row" },
-          h("span", { className: "resume-title" }, "Webmaster and Board Member | ISSA Puget Sound"),
-          h("span", { className: "resume-date" }, "March 2023 - August 2024")
+          h("span", { className: "resume-title" }, "Lifeguard | Seattle Parks and Recreation (Seasonal)"),
+          h("span", { className: "resume-date" }, "Jun 2024 - Aug 2025")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Managed website through WordPress"),
-          h("li", null, "Implemented front- and back-end solutions and recommendations from board members"),
-          h("li", null, "Contributed to strategic planning for the chapter's future")
+          h("li", null, "Ensured public safety and smooth beach operations"),
+          h("li", null, "Led daily fitness training and emergency drills"),
+          h("li", null, "Conducted maintenance of facilities and beach area"),
+          h("li", null, "Recommended for promotion, Aug 2025")
+        ),
+        h(
+          "div",
+          { className: "resume-row" },
+          h("span", { className: "resume-title" }, "Webmaster | ISSA Puget Sound"),
+          h("span", { className: "resume-date" }, "Mar 2023 - Aug 2024")
+        ),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Managed and maintained WordPress site for the Puget Sound chapter"),
+          h("li", null, "Implemented Board Member and Sponsor pages to support growth initiatives")
         ),
         h(
           "div",
           { className: "resume-row" },
           h("span", { className: "resume-title" }, "Lifeguard | Mercer Island Country Club"),
-          h("span", { className: "resume-date" }, "June 2021 - June 2025")
+          h("span", { className: "resume-date" }, "Jun 2021 - Jun 2025")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "CPR/AED/Lifeguard certified June 2021; recertified March 2023 and December 2024"),
-          h("li", null, "Inspected pool equipment and facilities to maintain cleanliness and safety"),
-          h("li", null, "Enforced pool rules, ensuring a safe environment"),
-          h("li", null, "Collaborated with staff to coordinate daily operations"),
-          h("li", null, "Accumulated 600+ hours of service")
-        ),
-        h(
-          "div",
-          { className: "resume-row" },
-          h("span", { className: "resume-title" }, "Lifeguard | Seattle Parks and Recreation (Seasonal)"),
-          h("span", { className: "resume-date" }, "June 2024 - August 2025")
-        ),
-        h(
-          "ul",
-          { className: "resume-list" },
-          h("li", null, "NW test certified June 2024"),
-          h("li", null, "Ensured public safety and smooth beach operations"),
-          h("li", null, "Performed daily fitness training and emergency drills"),
-          h("li", null, "Conducted maintenance of facilities and beach area"),
-          h("li", null, "Lead training for junior staff in both passive and active boat and paddleboard rescues"),
-          h("li", null, "Accumulated 500+ hours of service"),
-          h("li", null, "Recommended for promotion, August 2025")
-        ),
-        h("h4", { className: "resume-section" }, "Cybersecurity"),
-        h("h5", { className: "resume-subhead" }, "Awards"),
-        h(
-          "ul",
-          { className: "resume-list" },
-          h("li", null, "National Cyber Scholar, placed #3 in Washington State"),
-          h("li", null, "CyberStart Gold Award"),
-          h("li", null, "CyberPatriot XVI Platinum placement (top 150 in Semifinals)"),
-          h("li", null, "GIAC GFACT - certified"),
-          h("li", null, "IT Specialist - certified")
-        ),
-        h("h5", { className: "resume-subhead" }, "Competitions"),
-        h(
-          "ul",
-          { className: "resume-list" },
-          h("li", null, "DoD Cyber Sentinel June 2025, placed #10 out of 2100 overall"),
-          h("li", null, "NCAE Cyber 2025, placed #2 in East Overflow Region"),
-          h("li", null, "RITSEC CTF 2025, placed 48th out of 305 teams"),
-          h("li", null, "SILLYCTF 2025, placed 12th out of 50 teams"),
-          h("li", null, "BugCrowdCTF 2025, placed 19th out of 61 teams")
+          h("li", null, "CPR/AED/Lifeguard certified June 2021; recertified 2023, Dec 2024"),
+          h("li", null, "Inspected pool equipment and facilities for safety compliance"),
+          h("li", null, "Coordinated operations with staff; accumulated 600+ hours")
         ),
         h("h4", { className: "resume-section" }, "Technical Skills"),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Languages: Java, C++, Python, HTML, CSS"),
-          h("li", null, "Technologies: Steghide, Wireshark, Hashcat, Ghidra, Cisco Packet Tracer, WordPress, MS Office Suite")
+          h("li", null, "Languages: Java, C, Python, HTML, C, Assembly"),
+          h("li", null, "Technologies: Steghide, Wireshark, Grafana, Hashcat, gdb, Cisco Packet Tracer, MS Office Suite, Wazuh, ELK (Elasticsearch, Logstash, Kibana), WordPress, ntopng, Influx Database, Pi-hole, Unbound, n8n, volatility3"),
+          h("li", null, "Certifications: GIAC GFACT, IT Specialist")
         )
       )
     );
 
-  const Footer = () =>
-    h(
+  const Footer = () => {
+    const shimmerText = "© 2026 Brandon Wolfe. All rights reserved.";
+    const shimmerLetters = shimmerText.split("").map((char, index) =>
+      h(
+        "span",
+        {
+          key: `shimmer-${index}`,
+          className: "shimmer-letter",
+          style: { animationDelay: `${index * 0.04}s` }
+        },
+        char === " " ? "\u00A0" : char
+      )
+    );
+
+    return h(
       "footer",
       { className: "site-footer" },
-      h("p", null, "© 2026 Brandon Wolfe. All rights reserved."),
+      h("p", { className: "shimmer-text" }, shimmerLetters),
       h(
         "div",
         { className: "social-links" },
@@ -384,6 +506,7 @@
         )
       )
     );
+  };
 
   const App = ({ page }) =>
     h(
@@ -393,7 +516,7 @@
       h(
         "main",
         { className: "main" },
-        page === "home" ? h(React.Fragment, null, h(Hero), h(About), h(Contact)) : null,
+        page === "home" ? h(React.Fragment, null, h(Hero), h(ProjectsStrip), h(About), h(Contact)) : null,
         page === "writeups" ? h(Writeups) : null,
         page === "resume" ? h(Resume) : null
       ),
@@ -406,5 +529,18 @@
   const page = document.body.dataset.page || "home";
   const root = ReactDOM.createRoot(rootEl);
   root.render(h(App, { page }));
-})();
 
+  const scrollToHash = () => {
+    const { hash } = window.location;
+    if (!hash) return;
+    const target = document.querySelector(hash);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const offset = 90;
+      window.scrollBy({ top: -offset, left: 0, behavior: "auto" });
+    }
+  };
+
+  setTimeout(scrollToHash, 0);
+  window.addEventListener("hashchange", scrollToHash);
+})();

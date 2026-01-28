@@ -29,6 +29,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  scroll-padding-top: 90px;
 }
 
 body::before {
@@ -113,11 +114,11 @@ img {
   font-size: 0.95rem;
   text-transform: uppercase;
   animation: brand-pulse 2.8s ease-in-out infinite;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .brand:hover .brand-text {
-  color: var(--accent);
-  text-shadow: 0 0 12px rgba(34, 255, 154, 0.6);
+  text-shadow: 0 0 18px rgba(34, 255, 154, 0.85);
 }
 
 .nav-links {
@@ -134,6 +135,12 @@ img {
   transition: all 0.2s ease;
 }
 
+.ripple-letter {
+  display: inline-block;
+  color: var(--text);
+  animation: nav-ripple var(--ripple-duration, 9s) ease-in-out infinite;
+}
+
 .nav-link:hover {
   border-color: rgba(34, 255, 154, 0.5);
   color: var(--accent);
@@ -141,12 +148,17 @@ img {
   font-weight: 700;
 }
 
+.brand:hover .ripple-letter,
+.nav-link:hover .ripple-letter {
+  color: rgba(166, 108, 255, 0.9);
+}
+
 .main {
   flex: 1;
 }
 
 .hero {
-  padding: 5rem 1.5rem 3rem;
+  padding: 5rem 1.5rem 2.2rem;
 }
 
 .hero-grid {
@@ -261,6 +273,7 @@ img {
   max-width: 1100px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
+  scroll-margin-top: 70px;
 }
 
 .section-header {
@@ -349,6 +362,31 @@ img {
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
+.projects-strip .card {
+  min-height: 160px;
+}
+
+.projects-strip .card-grid {
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.projects-strip {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.projects-strip + .section {
+  padding-top: 2rem;
+}
+
+@media (max-width: 720px) {
+  .projects-strip .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card h3 {
   margin-bottom: 0.75rem;
   font-size: 1.05rem;
@@ -374,6 +412,28 @@ img {
   padding: 2rem;
   display: grid;
   gap: 1rem;
+}
+
+.resume-header {
+  text-align: center;
+}
+
+.resume-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+.resume-top .resume-name {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.resume-download {
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .resume-name {
@@ -404,12 +464,15 @@ img {
   letter-spacing: 0.1em;
   font-size: 0.9rem;
   color: var(--accent);
+  scroll-margin-top: 90px;
 }
 
 .resume-subhead {
   margin-top: 0.5rem;
   font-size: 0.95rem;
-  color: var(--warning);
+  color: var(--accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .resume-row {
@@ -419,24 +482,46 @@ img {
   gap: 0.5rem;
 }
 
+.resume-anchor {
+  scroll-margin-top: 90px;
+}
+
 .resume-title {
   font-weight: 600;
+  color: var(--accent-2);
 }
 
 .resume-date {
   color: var(--muted);
   font-style: italic;
+  text-transform: none;
 }
 
 .resume-sub {
   color: var(--muted);
 }
 
+.resume-sub-strong {
+  color: var(--text);
+  text-transform: none;
+}
+
 .resume-list {
   padding-left: 1.2rem;
   display: grid;
   gap: 0.35rem;
-  color: var(--text);
+  color: var(--muted);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.96rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-variant: normal;
+}
+
+.resume-list li {
+  text-transform: none;
+  font-variant: normal;
+  letter-spacing: normal;
 }
 
 .site-footer {
@@ -447,8 +532,21 @@ img {
 }
 
 .site-footer p {
-  color: var(--muted);
   margin-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.shimmer-text {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.shimmer-letter {
+  display: inline-block;
+  color: var(--muted);
+  opacity: 0.6;
+  animation: letter-shimmer 3.2s ease-in-out infinite;
+  will-change: opacity, color;
 }
 
 .social-links {
@@ -482,6 +580,36 @@ img {
   }
 }
 
+@keyframes nav-ripple {
+  0%,
+  75%,
+  100% {
+    color: var(--text);
+  }
+  35% {
+    color: rgba(166, 108, 255, 0.9);
+  }
+}
+
+@keyframes letter-shimmer {
+  0% {
+    opacity: 0.45;
+    color: var(--muted);
+  }
+  45% {
+    opacity: 1;
+    color: var(--accent);
+  }
+  90% {
+    opacity: 0.55;
+    color: var(--muted);
+  }
+  100% {
+    opacity: 0.45;
+    color: var(--muted);
+  }
+}
+
 
 @media (max-width: 720px) {
   .nav {
@@ -496,5 +624,14 @@ img {
   .hero-actions {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .resume-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resume-download {
+    margin-left: 0;
   }
 }
