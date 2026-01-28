@@ -1,4 +1,14 @@
 ﻿(() => {
+  const enableMotion = () => {
+    document.documentElement.classList.add("motion-ready");
+  };
+
+  if (document.readyState === "complete") {
+    setTimeout(enableMotion, 350);
+  } else {
+    window.addEventListener("load", () => setTimeout(enableMotion, 350), { once: true });
+  }
+
   const initMatrix = () => {
     const canvas = document.getElementById("matrix-canvas");
     if (!canvas) return;
@@ -52,7 +62,15 @@
     window.addEventListener("resize", resize);
   };
 
-  initMatrix();
+  const waitForMotion = () => {
+    if (document.documentElement.classList.contains("motion-ready")) {
+      initMatrix();
+      return;
+    }
+    setTimeout(waitForMotion, 60);
+  };
+
+  waitForMotion();
 
   const h = React.createElement;
 
@@ -545,3 +563,4 @@
   setTimeout(scrollToHash, 0);
   window.addEventListener("hashchange", scrollToHash);
 })();
+

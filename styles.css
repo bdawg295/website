@@ -115,6 +115,7 @@ img {
   text-transform: uppercase;
   animation: brand-pulse 2.8s ease-in-out infinite;
   transition: color 0.2s ease, text-shadow 0.2s ease;
+  animation-play-state: paused;
 }
 
 .brand:hover .brand-text {
@@ -139,6 +140,7 @@ img {
   display: inline-block;
   color: var(--text);
   animation: nav-ripple var(--ripple-duration, 9s) ease-in-out infinite;
+  animation-play-state: paused;
 }
 
 .nav-link:hover {
@@ -572,6 +574,13 @@ img {
   opacity: 0.6;
   animation: letter-shimmer 3.2s ease-in-out infinite;
   will-change: opacity, color;
+  animation-play-state: paused;
+}
+
+.motion-ready .brand-text,
+.motion-ready .ripple-letter,
+.motion-ready .shimmer-letter {
+  animation-play-state: running;
 }
 
 .social-links {
