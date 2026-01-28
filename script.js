@@ -534,9 +534,11 @@
     if (!hash) return;
     const target = document.querySelector(hash);
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      const offset = 90;
-      window.scrollBy({ top: -offset, left: 0, behavior: "auto" });
+      const isResumeAnchor = hash.startsWith("#resume");
+      const isContact = hash === "#contact";
+      const offset = isResumeAnchor ? 90 : isContact ? 20 : 60;
+      const top = window.pageYOffset + target.getBoundingClientRect().top - offset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 

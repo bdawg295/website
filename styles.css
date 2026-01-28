@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  scroll-padding-top: 90px;
+  scroll-padding-top: 60px;
 }
 
 body::before {
@@ -273,7 +273,7 @@ img {
   max-width: 1100px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
-  scroll-margin-top: 70px;
+  scroll-margin-top: 60px;
 }
 
 .section-header {
@@ -456,6 +456,11 @@ img {
 }
 
 .resume-contact a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.resume-contact a {
   color: var(--accent-2);
 }
 
@@ -496,12 +501,18 @@ img {
   font-weight: 600;
   color: var(--accent-2);
   min-width: 0;
+  flex: 1 1 60%;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .resume-date {
   color: var(--muted);
   font-style: italic;
   text-transform: none;
+  flex: 0 1 auto;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .resume-sub {
@@ -627,7 +638,7 @@ img {
 
 @media (max-width: 720px) {
   body {
-    scroll-padding-top: 70px;
+    scroll-padding-top: 60px;
   }
 
   .nav {
@@ -671,7 +682,7 @@ img {
   }
 
   .section {
-    scroll-margin-top: 70px;
+    scroll-margin-top: 60px;
   }
 
   .resume-top {
@@ -689,5 +700,13 @@ img {
 
   .resume-contact {
     font-size: 0.9rem;
+  }
+
+  .resume-title {
+    font-size: 0.95rem;
+  }
+
+  .resume-date {
+    font-size: 0.85rem;
   }
 }
