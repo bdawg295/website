@@ -108,19 +108,14 @@
         className: "nav",
         style: { "--ripple-duration": `${totalDuration}s` }
       },
-      h(
-        "a",
-        {
-          className: "brand",
-          href: "/index.html",
-          onClick: (event) => {
-            if (page === "home") {
-              event.preventDefault();
-            }
-          }
-        },
-        h("span", { className: "brand-text" }, rippleText(brandText, 0, rippleOffset))
-      ),
+        h(
+          "a",
+          {
+            className: "brand",
+            href: "/index.html#top"
+          },
+          h("span", { className: "brand-text" }, rippleText(brandText, 0, rippleOffset))
+        ),
       h(
         "div",
         { className: "nav-links" },
@@ -516,6 +511,7 @@
       h(
         "main",
         { className: "main" },
+        h("div", { id: "top" }),
         page === "home" ? h(React.Fragment, null, h(Hero), h(ProjectsStrip), h(About), h(Contact)) : null,
         page === "writeups" ? h(Writeups) : null,
         page === "resume" ? h(Resume) : null
