@@ -3,49 +3,49 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(fonts/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6xpg.ttf) format("truetype");
+  src: url(fonts/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6xpg.woff2) format("woff2");
 }
 @font-face {
   font-family: "Orbitron";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(fonts/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyxSmxpg.ttf) format("truetype");
+  src: url(fonts/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyxSmxpg.woff2) format("woff2");
 }
 @font-face {
   font-family: "Space Grotesk";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUUsj.ttf) format("truetype");
+  src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUUsj.woff2) format("woff2");
 }
 @font-face {
   font-family: "Space Grotesk";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7aUUsj.ttf) format("truetype");
+  src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7aUUsj.woff2) format("woff2");
 }
 @font-face {
   font-family: "Space Grotesk";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj42Vksj.ttf) format("truetype");
+  src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj42Vksj.woff2) format("woff2");
 }
 @font-face {
   font-family: "Space Mono";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(fonts/i7dPIFZifjKcF5UAWdDRUEY.ttf) format("truetype");
+  src: url(fonts/i7dPIFZifjKcF5UAWdDRUEY.woff2) format("woff2");
 }
 @font-face {
   font-family: "Space Mono";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(fonts/i7dMIFZifjKcF5UAWdDRaPpZYFI.ttf) format("truetype");
+  src: url(fonts/i7dMIFZifjKcF5UAWdDRaPpZYFI.woff2) format("woff2");
 }
 :root {
   --bg: #070a0f;
@@ -787,4 +787,9 @@ img {
   .resume-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .resume-row .resume-title,
+  .resume-row .resume-date {
+    width: 100%;
   }
