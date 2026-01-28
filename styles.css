@@ -359,6 +359,9 @@ img {
   border-radius: 16px;
   border: 1px solid rgba(34, 255, 154, 0.4);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .about-text {
@@ -748,6 +751,10 @@ img {
     align-items: flex-start;
   }
 
+  .resume-top .resume-name {
+    white-space: normal;
+  }
+
   .resume-download {
     margin-left: 0;
   }
@@ -777,3 +784,7 @@ img {
   }
 }
 
+  .resume-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }

@@ -210,11 +210,13 @@
         { className: "about-grid" },
         h("div", { className: "about-card" },
           h("img", {
-            src: "images/IMG_9405.jpg",
+            src: "images/IMG_9405-900.jpg",
+            srcSet: "images/IMG_9405-600.jpg 600w, images/IMG_9405-900.jpg 900w, images/IMG_9405.jpg 2172w",
+            sizes: "(max-width: 720px) 70vw, 240px",
             alt: "Brandon Wolfe",
             className: "about-image",
-            width: 2172,
-            height: 2866,
+            width: 900,
+            height: 1188,
             loading: "lazy",
             decoding: "async"
           })
