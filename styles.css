@@ -414,6 +414,7 @@ img {
   gap: 1rem;
   word-break: break-word;
   overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .resume-header {
@@ -484,6 +485,7 @@ img {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .resume-anchor {
@@ -493,6 +495,7 @@ img {
 .resume-title {
   font-weight: 600;
   color: var(--accent-2);
+  min-width: 0;
 }
 
 .resume-date {
@@ -503,6 +506,7 @@ img {
 
 .resume-sub {
   color: var(--muted);
+  min-width: 0;
 }
 
 .resume-sub-strong {
@@ -526,13 +530,19 @@ img {
   text-transform: none;
   font-variant: normal;
   letter-spacing: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .site-footer {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   padding: 2rem 1.5rem;
   text-align: center;
   background: transparent;
+}
+
+.contact-section {
+  padding-bottom: 1.5rem;
 }
 
 .site-footer p {
@@ -671,5 +681,13 @@ img {
 
   .resume-download {
     margin-left: 0;
+  }
+
+  .resume-card {
+    padding: 1.5rem;
+  }
+
+  .resume-contact {
+    font-size: 0.9rem;
   }
 }

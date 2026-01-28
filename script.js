@@ -194,7 +194,9 @@
           h("img", {
             src: "images/IMG_9405.jpg",
             alt: "Brandon Wolfe",
-            className: "about-image"
+            className: "about-image",
+            loading: "lazy",
+            decoding: "async"
           })
         ),
         h(
@@ -254,7 +256,7 @@
   const Contact = () =>
     h(
       "section",
-      { id: "contact", className: "section" },
+      { id: "contact", className: "section contact-section" },
       h("div", { className: "section-header" },
         h("h2", null, "Contact")
       ),
