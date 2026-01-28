@@ -545,17 +545,18 @@ img {
   justify-content: space-between;
   gap: 0.5rem;
   min-width: 0;
+  align-items: baseline;
 }
 
 .resume-anchor {
-  scroll-margin-top: 90px;
+  scroll-margin-top: 120px;
 }
 
 .resume-title {
   font-weight: 600;
   color: var(--accent-2);
   min-width: 0;
-  flex: 1 1 60%;
+  flex: 1 1 auto;
   max-width: 100%;
   overflow-wrap: anywhere;
 }
@@ -564,7 +565,10 @@ img {
   color: var(--muted);
   font-style: italic;
   text-transform: none;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
   max-width: 100%;
   overflow-wrap: anywhere;
 }
@@ -782,8 +786,6 @@ img {
   .resume-list {
     font-size: 0.9rem;
   }
-}
-
   .resume-row {
     flex-direction: column;
     align-items: flex-start;
@@ -793,3 +795,16 @@ img {
   .resume-row .resume-date {
     width: 100%;
   }
+
+  .resume-date {
+    white-space: normal;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .brand-text,
+  .ripple-letter,
+  .shimmer-letter {
+    animation: none !important;
+  }
+}

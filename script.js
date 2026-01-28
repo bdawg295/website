@@ -1,4 +1,8 @@
 ﻿(() => {
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  const initialHash = window.location.hash;
   const enableMotion = () => {
     document.documentElement.classList.add("motion-ready");
   };
@@ -551,20 +555,22 @@
   const root = ReactDOM.createRoot(rootEl);
   root.render(h(App, { page }));
 
-  const scrollToHash = () => {
-    const { hash } = window.location;
+  const scrollToHash = (hash, attempt = 0) => {
     if (!hash) return;
     const target = document.querySelector(hash);
     if (target) {
-      const isResumeAnchor = hash.startsWith("#resume");
-      const isContact = hash === "#contact";
-      const offset = isResumeAnchor ? 90 : isContact ? 20 : 60;
-      const top = window.pageYOffset + target.getBoundingClientRect().top - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (attempt < 12) {
+      requestAnimationFrame(() => scrollToHash(hash, attempt + 1));
     }
   };
 
-  setTimeout(scrollToHash, 0);
-  window.addEventListener("hashchange", scrollToHash);
+  if (initialHash) {
+    setTimeout(() => scrollToHash(initialHash), 50);
+  }
+  window.addEventListener("hashchange", () => scrollToHash(window.location.hash));
 })();
+
 
