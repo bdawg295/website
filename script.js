@@ -167,7 +167,7 @@
           )
         ),
         h("div", { className: "hero-panel" },
-          h("div", { className: "panel-line" }, "Status: ACTIVE"),
+          h("div", { className: "panel-line" }, "Status: LOOKING FOR WORK"),
           h("div", { className: "panel-title" }, "Focus"),
             h(
               "ul",
