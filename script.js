@@ -99,6 +99,16 @@
     ];
   };
 
+  const contactInfo = {
+    emailUser: "brandon",
+    emailDomain: "wolfedwelling.com",
+    phoneDigits: ["206", "295", "2995"]
+  };
+
+  const getEmail = () => `${contactInfo.emailUser}@${contactInfo.emailDomain}`;
+  const getPhone = () => contactInfo.phoneDigits.join("");
+  const getPhoneDisplay = () => contactInfo.phoneDigits.join("-");
+
   const rippleText = (text, baseDelay = 0, offset = 0) =>
     text.split("").map((char, index) =>
       h(
@@ -293,7 +303,7 @@
           "p",
           null,
           "Feel free to reach out to me via email at ",
-          h("a", { href: "mailto:brandon@wolfedwelling.com" }, "brandon@wolfedwelling.com"),
+          h("a", { href: `mailto:${getEmail()}` }, getEmail()),
           ", or connect with me on ",
           h(
             "a",
@@ -355,7 +365,7 @@
           { className: "resume-contact" },
           h("span", null, "Seattle, Washington"),
           h("span", { className: "divider" }, "|"),
-          h("a", { href: "mailto:brandon@wolfedwelling.com" }, "brandon@wolfedwelling.com"),
+          h("a", { href: `mailto:${getEmail()}` }, getEmail()),
           h("span", { className: "divider" }, "|"),
           h(
             "a",
@@ -363,7 +373,7 @@
             "LinkedIn"
           ),
           h("span", { className: "divider" }, "|"),
-          h("a", { href: "tel:+1-206-295-2995" }, "206-295-2995")
+          h("a", { href: `tel:+1${getPhone()}` }, getPhoneDisplay())
         ),
         h("h4", { className: "resume-section" }, "Objective"),
         h(
@@ -522,7 +532,7 @@
           { href: "https://github.com/bdawg295", target: "_blank", rel: "noopener noreferrer" },
           "Github"
         ),
-        h("a", { href: "mailto:brandon@wolfedwelling.com" }, "Email me!"),
+        h("a", { href: `mailto:${getEmail()}` }, "Email me!"),
         h(
           "a",
           { href: "https://www.linkedin.com/in/bmw-cyber/", target: "_blank", rel: "noopener noreferrer" },
