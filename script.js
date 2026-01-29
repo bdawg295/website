@@ -489,7 +489,7 @@
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Languages: Java, C, Python, HTML, C, Assembly"),
+          h("li", null, "Languages: Java, Python, HTML, CSS, C, Assembly"),
           h("li", null, "Technologies: Steghide, Wireshark, Grafana, Hashcat, gdb, Cisco Packet Tracer, MS Office Suite, Wazuh, ELK (Elasticsearch, Logstash, Kibana), WordPress, ntopng, Influx Database, Pi-hole, Unbound, n8n, volatility3"),
           h("li", null, "Certifications: GIAC GFACT, IT Specialist")
         )
