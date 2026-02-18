@@ -122,6 +122,44 @@ img {
   display: block;
 }
 
+
+html {
+  scrollbar-width: auto;
+  scrollbar-color: #561cb4 #08101c;
+}
+
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, #060b14 0%, #08101c 100%);
+  border-left: 1px solid rgba(0, 199, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0, 199, 255, 0.95), rgba(34, 255, 154, 0.85));
+  border-radius: 999px;
+  border: 2px solid #08101c;
+  box-shadow: 0 0 12px rgba(0, 199, 255, 0.35);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(34, 255, 154, 0.95), rgba(0, 199, 255, 0.95));
+  box-shadow: 0 0 16px rgba(34, 255, 154, 0.45);
+}
+
+/* Keep scroll arrow button areas from flashing/fading on hover */
+::-webkit-scrollbar-button {
+  background-color: #08101c;
+  border-left: 1px solid rgba(0, 199, 255, 0.2);
+}
+
+::-webkit-scrollbar-button:hover,
+::-webkit-scrollbar-button:active {
+  background-color: #08101c;
+}
+
 .app {
   position: relative;
   z-index: 1;
