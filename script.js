@@ -1,8 +1,9 @@
-﻿(() => {
+(() => {
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
   const initialHash = window.location.hash;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const enableMotion = () => {
     document.documentElement.classList.add("motion-ready");
   };
@@ -16,7 +17,8 @@
   const initMatrix = () => {
     const canvas = document.getElementById("matrix-canvas");
     if (!canvas) return;
-    if (window.matchMedia("(max-width: 720px)").matches) return;
+    const smallScreen = window.matchMedia("(max-width: 720px)");
+    let frame = 0;
 
     const ctx = canvas.getContext("2d");
     const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@%&*+?<>[]{}";
@@ -58,12 +60,23 @@
           }
         }
       }
-      requestAnimationFrame(draw);
+      frame = requestAnimationFrame(draw);
     };
 
-    resize();
-    draw();
-    window.addEventListener("resize", resize);
+    const syncMotion = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (reducedMotion.matches || smallScreen.matches) return;
+      resize();
+      draw();
+    };
+    syncMotion();
+    reducedMotion.addEventListener("change", syncMotion);
+    smallScreen.addEventListener("change", syncMotion);
+    window.addEventListener("resize", () => {
+      if (frame) resize();
+    });
   };
 
   const waitForMotion = () => {
@@ -94,7 +107,7 @@
     return [
       { label: "About", href: onHome ? "#about" : "/index.html#about" },
       { label: "Resume", href: "/resume.html" },
-      { label: "Projects", href: onHome ? "#projects" : "/index.html#projects" },
+      { label: "Projects", href: "/projects.html" },
       { label: "Contact", href: onHome ? "#contact" : "/index.html#contact" }
     ];
   };
@@ -123,6 +136,16 @@
     );
 
   const Header = ({ page }) => {
+    const headerRef = React.useRef(null);
+    React.useLayoutEffect(() => {
+      const updateHeight = () => {
+        document.documentElement.style.setProperty("--header-height", `${headerRef.current.getBoundingClientRect().height}px`);
+      };
+      updateHeight();
+      const observer = new ResizeObserver(updateHeight);
+      observer.observe(headerRef.current);
+      return () => observer.disconnect();
+    }, []);
     const brandText = "Brandon Wolfe";
     const letterStep = 0.06;
     const gap = 0.01;
@@ -167,7 +190,7 @@
       )
     );
 
-    return h("header", { className: "site-header" }, nav);
+    return h("header", { className: "site-header", ref: headerRef }, nav);
   };
 
   const Hero = () =>
@@ -181,12 +204,12 @@
           h(
             "p",
             { className: "hero-sub" },
-            "RIT cybersecurity student focused on forensics, practical defense, and building things."
+            "RIT cybersecurity student interested in investigating threats and building smarter, more secure systems."
           ),
           h(
             "p",
             { className: "hero-note" },
-            "Currently seeking 2026 internship/co-op opportunities."
+            "Currently seeking Spring or Summer 2027 internship/co-op opportunities."
           ),
           h(
             "div",
@@ -204,9 +227,9 @@
             h(
               "ul",
               { className: "panel-list" },
-              h("li", null, "Forensics"),
-            h("li", null, "Networking"),
-              h("li", null, "Incident Response")
+              h("li", null, "Security Operations"),
+              h("li", null, "Digital Forensics"),
+              h("li", null, "Intelligent Systems")
             )
         )
       )
@@ -224,13 +247,13 @@
         { className: "about-grid" },
         h("div", { className: "about-card" },
           h("img", {
-            src: "images/IMG_9405-900.jpg",
-            srcSet: "images/IMG_9405-600.jpg 600w, images/IMG_9405-900.jpg 900w, images/IMG_9405.jpg 2172w",
-            sizes: "(max-width: 720px) 70vw, 240px",
+            src: "images/brandon-wolfe-2026-900.jpg",
+            srcSet: "images/brandon-wolfe-2026-480.jpg 480w, images/brandon-wolfe-2026-900.jpg 900w, images/brandon-wolfe-2026-1400.jpg 1400w",
+            sizes: "(max-width: 559px) calc(100vw - 90px), (max-width: 1100px) calc(50vw - 82px), 468px",
             alt: "Brandon Wolfe",
             className: "about-image",
-            width: 900,
-            height: 1188,
+            width: 4000,
+            height: 6000,
             loading: "lazy",
             decoding: "async"
           })
@@ -241,19 +264,19 @@
           h(
             "p",
             null,
-            "Hi! I'm Brandon, a sophomore at RIT majoring in Cyber and minoring in Criminal Justice. I'm active in RIT's main cybersecurity club, where I participate in Physical Vulnerability and Incident Response groups. I also play for the men's ultimate frisbee B team where I'm treasurer and safety officer. I regularly compete in cybersecurity competitions - most recently, I placed 10th out of about 2,100 participants in the DoD Cyber Sentinel for June 2025 and won $500 USD. I write up some of my competition challenges, which you can read ",
+            "Hi! I'm Brandon, a junior at RIT majoring in Cybersecurity and minoring in Criminal Justice. I'm a member of RITSEC, RIT's cybersecurity club. I also play for the men's ultimate frisbee B team, where I'm treasurer and safety officer. I regularly compete in cybersecurity competitions, including a first-place finish at Eaton CTF 2025 and 10th out of about 2,100 participants in the June 2025 DoD Cyber Sentinel. I write up some of my competition challenges, which you can read ",
             h("a", { href: "/writeups.html" }, "here"),
             "."
           ),
           h(
             "p",
             null,
-            "Outside of school, I really enjoy rock climbing and reading. I also like to build things. Most recently, I've been into wallets and leatherwork, and I spend time on my homelab. I'm also working on a red team tool, but it's not ready to release yet. I'm from the beautiful state of Washington but I go to school in Rochester, NY."
+            "Outside of school, I really enjoy rock climbing, reading, cooking, and baking. I also like to build things, especially wallets and other leatherwork, and I spend time on my homelab. I'm from the beautiful state of Washington but go to school in Rochester, NY."
           ),
           h(
             "p",
             null,
-            "I'm also seeking 2026 co-op or internship opportunities. Feel free to view my ",
+            "I'm seeking Spring or Summer 2027 co-op or internship opportunities. Feel free to view my ",
             h("a", { href: "/resume.html" }, "resume"),
             " or reach out via the contact info ",
             h("a", { href: "#contact" }, "below"),
@@ -263,31 +286,128 @@
       )
     );
 
-  const ProjectsStrip = () =>
-    h(
+  const projects = [
+    {
+      id: "homelab",
+      title: "Homelab | Networking and Virtualization",
+      date: "2025 - Present",
+      summary: "Virtualization, network monitoring, remote access, and self-hosted services.",
+      overview: "I run an evolving homelab with Proxmox-hosted Windows and Linux VMs and a separate Ubuntu service host. My work spans network security, monitoring, DNS, remote access, and asset inventory.",
+      sections: [
+        {
+          title: "Networking and remote access",
+          text: "I configured OPNsense with Zenarmor at the network edge and repurposed my previous router as a wireless access point. I deployed Pi-hole and Unbound earlier in the lab's history, later moving DNS to the OPNsense setup. After testing WireGuard behind carrier-grade NAT, I adopted Tailscale subnet routing for remote access."
+        },
+        {
+          title: "Network monitoring",
+          text: "I initially attempted an ELK deployment at home, then switched to ntopng, InfluxDB, and Grafana because of limited RAM. I configured switch port mirroring, collected traffic measurements, and built dashboards. I no longer use those monitoring stacks in my homelab; Zenarmor now provides the network visibility I need."
+        },
+        {
+          title: "Self-hosted services",
+          text: "I deployed Snipe-IT on the repurposed Ubuntu host using Docker Compose and MariaDB, and explored API-based inventory updates and discovery agents as potential next steps."
+        }
+      ],
+      stack: "Proxmox VE, OPNsense, Zenarmor, Tailscale, Unbound, Docker Compose, Snipe-IT. Previously used: ntopng, InfluxDB, Grafana, Pi-hole."
+    },
+    {
+      id: "elk",
+      title: "ELK SIEM Deployment",
+      date: "Sept 2025 - Dec 2025 | RITSEC SIEM Mentorship Group",
+      summary: "Centralized Windows and Linux security telemetry, dashboards, and alerting.",
+      overview: "Through RITSEC's SIEM group, I deployed an Elastic SIEM in an environment separate from my earlier homelab attempt.",
+      sections: [
+        {
+          title: "Deployment and collection",
+          text: "I deployed Elasticsearch and Kibana on Ubuntu Server and connected Windows and Linux endpoints through Fleet Server and Elastic Agent. I collected Windows Security and Sysmon events, Linux system and authentication logs, and host metrics."
+        },
+        {
+          title: "Monitoring and investigation",
+          text: "I configured Kibana dashboards and alerting workflows for reviewing endpoint activity and investigating security events. I verified event ingestion and also experimented with Heartbeat-based service monitoring."
+        }
+      ],
+      stack: "Elasticsearch, Kibana, Fleet Server, Elastic Agent, Sysmon, Ubuntu Server, Windows, Heartbeat"
+    }
+  ];
+
+  const Projects = () => {
+    const [selected, setSelected] = React.useState(null);
+    const dialogRef = React.useRef(null);
+
+    React.useEffect(() => {
+      if (!selected) return;
+      const dialog = dialogRef.current;
+      dialog.showModal();
+      document.body.classList.add("project-dialog-open");
+      return () => {
+        dialog.close();
+        document.body.classList.remove("project-dialog-open");
+      };
+    }, [selected]);
+
+    return h(
       "section",
-      { className: "section projects-strip", id: "projects" },
+      { className: "section", id: "projects" },
       h("div", { className: "section-header" },
-        h("h2", null, "Projects"),
-        h("p", { className: "section-sub" }, "A few highlights from my hands-on work.")
+        h("h1", null, "Projects"),
+        h("p", { className: "section-sub" }, "Explore my hands-on work. Select a project for a closer look.")
       ),
       h(
         "div",
         { className: "card-grid" },
-        h(
-          "a",
-          { className: "card", href: "/resume.html#resume-projects-homelab" },
-          h("h3", null, "Homelab | System Monitoring and Virtualization"),
-          h("p", null, "Proxmox, network monitoring stack, DNS filtering, and remote access.")
-        ),
-        h(
-          "a",
-          { className: "card", href: "/resume.html#resume-projects-elk" },
-          h("h3", null, "ELK SIEM Deployment"),
-          h("p", null, "Multi-host ELK stack with log forwarding and tuned alerting.")
+        projects.map((project) => h(
+          "button",
+          {
+            key: project.id,
+            type: "button",
+            className: "card project-card",
+            "aria-haspopup": "dialog",
+            onClick: () => setSelected(project)
+          },
+          h("span", { className: "project-card-title" }, project.title),
+          h("span", { className: "project-card-summary" }, project.summary),
+          h("span", { className: "project-card-prompt" }, "View project details")
+        ))
+      ),
+      h(
+        "dialog",
+        {
+          ref: dialogRef,
+          className: "project-dialog",
+          "aria-labelledby": "project-dialog-title",
+          onClose: () => setSelected(null),
+          onClick: (event) => {
+            if (event.target !== event.currentTarget) return;
+            const bounds = event.currentTarget.getBoundingClientRect();
+            if (event.clientX < bounds.left || event.clientX > bounds.right ||
+                event.clientY < bounds.top || event.clientY > bounds.bottom) {
+              event.currentTarget.close();
+            }
+          }
+        },
+        selected && h("div", { className: "project-dialog-content" },
+          h("div", { className: "project-dialog-header" },
+            h("h2", { id: "project-dialog-title" }, selected.title),
+            h("button", {
+              type: "button",
+              className: "button ghost",
+              autoFocus: true,
+              onClick: () => dialogRef.current.close()
+            }, "Close")
+          ),
+          h("p", { className: "section-sub" }, selected.date),
+          h("p", null, selected.overview),
+          selected.sections.map((section) => h("section", { key: section.title },
+            h("h3", { className: "resume-subhead" }, section.title),
+            h("p", null, section.text)
+          )),
+          h("section", null,
+            h("h3", { className: "resume-subhead" }, "Tools and platforms"),
+            h("p", null, selected.stack)
+          )
         )
       )
     );
+  };
 
   const Contact = () =>
     h(
@@ -320,7 +440,7 @@
       "section",
       { className: "section" },
       h("div", { className: "section-header" },
-        h("h2", null, "Challenge Writeups"),
+        h("h1", null, "Challenge Writeups"),
         h("p", { className: "section-sub" }, "Click any card below to view or download the PDF.")
       ),
       h(
@@ -345,7 +465,7 @@
       "section",
       { className: "section resume-section" },
       h("div", { className: "section-header resume-header" },
-        h("h2", null, "Resume"),
+        h("h1", null, "Resume"),
       ),
       h(
         "div",
@@ -379,7 +499,7 @@
         h(
           "p",
           { className: "resume-sub resume-sub-strong" },
-          "Seeking an internship in Cybersecurity or Information Security, with interests in Forensics, SOC and NOC operations, SIEMs, and Networking."
+          "Cybersecurity student seeking an internship for Spring or Summer 2027."
         ),
         h("h4", { className: "resume-section" }, "Education"),
         h(
@@ -391,71 +511,86 @@
         h(
           "div",
           { className: "resume-row" },
-        h("span", { className: "resume-sub resume-sub-strong" }, "Bachelor of Science in Cybersecurity, Minoring in Criminal Justice"),
-          h("span", { className: "resume-date" }, "GPA: 3.11")
+          h("span", { className: "resume-sub resume-sub-strong" }, "Bachelor of Science in Cybersecurity, Minoring in Criminal Justice")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Relevant Coursework: Routing and Switching I, Software Development I & II, C & Assembly Programming, Reverse Engineering Fundamentals, Systems Administration I, Networking Services")
+          h("li", null, "Relevant Coursework: Networking Services, Endpoint Security Engineering, Reverse Engineering, Systems Administration, Cryptography, C & Assembly Programming")
+        ),
+        h("h4", { className: "resume-section" }, "Experience"),
+        h(
+          "div",
+          { className: "resume-row" },
+          h("span", { className: "resume-title" }, "SOC Analyst and Incident Response Intern | Lynden Incorporated"),
+          h("span", { className: "resume-date" }, "May 2026 - Aug 2026")
+        ),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Triaged Darktrace alerts involving anomalous network and authentication activity, documenting dispositions and escalations through Jira"),
+          h("li", null, "Investigated phishing and spoofed emails, analyzing sender authentication, links, attachments, and recipient exposure using Microsoft 365 Defender, Darktrace/Email, and Joe Sandbox"),
+          h("li", null, "Audited privileged access, Active Directory groups, and security policies; authored four Netwrix Access Reviews playbooks supporting an enterprise rollout"),
+          h("li", null, "Created 9 of 15 phishing simulation emails for a company-wide awareness campaign, coordinating scenario approvals and employee education"),
+          h("li", null, "Developed ES|QL queries and Kibana dashboard designs to improve security visibility across authentication, network, and alert telemetry"),
+          h("li", null, "Authored a technical business case for Darktrace SDK integration to automate threat intelligence workflows and expand ELK/Kibana visibility")
         ),
         h("h4", { className: "resume-section", id: "resume-projects" }, "Projects"),
         h(
           "div",
           { className: "resume-row resume-anchor", id: "resume-projects-homelab" },
-          h("span", { className: "resume-title" }, "Homelab | System Monitoring and Virtualization"),
-          h("span", { className: "resume-date" }, "Aug 2025 - Present")
+          h("span", { className: "resume-title" }, "Homelab | Networking and Virtualization"),
+          h("span", { className: "resume-date" }, "2025 - Present")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Deployed Proxmox for isolated virtual machines and N8n hosting"),
-          h("li", null, "Built a network monitoring stack using ntopng, InfluxDB, and Grafana on Ubuntu Server"),
-          h("li", null, "Configured port mirroring for full LAN traffic capture and visualization"),
-          h("li", null, "Deployed Pi-hole and Unbound for internal DNS resolution and network-wide ad blocking, and Tailscale for remote access")
+          h("li", null, "Deployed OPNsense with Zenarmor for firewalling and deep packet inspection"),
+          h("li", null, "Configured Tailscale subnet routing for secure remote access and deployed Proxmox VE for virtualized Linux and Windows environments"),
+          h("li", null, "Deployed Snipe-IT using Docker on Ubuntu Server for centralized asset management")
         ),
         h(
           "div",
           { className: "resume-row resume-anchor", id: "resume-projects-elk" },
-          h("span", { className: "resume-title" }, "ELK SIEM Deployment | RITSEC SIEM Interest Group"),
+          h("span", { className: "resume-title" }, "ELK SIEM Deployment | RITSEC SIEM Mentorship Group"),
           h("span", { className: "resume-date" }, "Sept 2025 - Dec 2025")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Deployed and configured ELK stack (Elasticsearch, Logstash, Kibana) across Linux and Windows hosts"),
-          h("li", null, "Established log forwarding and service monitoring for multi host visibility"),
-          h("li", null, "Tuned dashboards and notifications for efficient alerting and event correlation")
+          h("li", null, "Deployed an ELK SIEM environment with Elasticsearch, Kibana, and Elastic Agent across Windows and Linux hosts"),
+          h("li", null, "Ingested Windows Security, Sysmon, and Linux system logs to centralize endpoint security telemetry"),
+          h("li", null, "Configured Kibana dashboards and alerting workflows to support security monitoring and event investigation")
         ),
         h("h4", { className: "resume-section" }, "Extracurriculars"),
         h("h5", { className: "resume-subhead" }, "Competitions and Challenges"),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "DoD Cyber Sentinel 2025 — Top 10 (individual, #10/2100); solved web exploitation, crypto, OSINT, and forensics challenges including SSRF exploit writeup"),
-          h("li", null, "Eaton CTF 2025 — 1st place (team, 1/16); memory forensics, crypto, and web exploitation"),
-          h("li", null, "Bugcrowd Student Finale CTF 2025 — 12/66 (team); crypto and forensics challenges"),
-          h("li", null, "NCAE Cyber 2025 — 2nd place (team, East Overflow)"),
-          h("li", null, "CyberPatriot XVI — Platinum Tier (Top 150); Linux and Windows system hardening under timed scoring")
+          h("li", null, "IRSEC 2025 and ISTS 2026 — Black team scoring member; created score checks for monitoring uptime and updated the scoring engine"),
+          h("li", null, "Eaton CTF 2025 — 1st place; web and memory forensics"),
+          h("li", null, "DoD Cyber Sentinel 2025 — Top 10/2100"),
+          h("li", null, "NCAE Cyber 2025 — 2nd place, East Division"),
+          h("li", null, "Bugcrowd CTF 2025 — 12/66"),
+          h("li", null, "CyberPatriot XVI — Top 150")
         ),
         h("h5", { className: "resume-subhead" }, "Clubs"),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Active member of RITSEC: SIEM Interest Group, Physical Security and Incident Response Groups; focus on lockpicking, bypassing, and incident analysis")
+          h("li", null, "RITSEC: Hardware Reversing (telecoms and automotive modules) and Web Application Pentesting mentorship groups; Physical Security interest group (lockpicking and bypassing)")
         ),
         h(
           "div",
           { className: "resume-row" },
-          h("span", { className: "resume-title" }, "Treasurer and Safety Officer | Ultimate Frisbee B Team"),
-          h("span", { className: "resume-date" }, "2025 - Present")
+          h("span", { className: "resume-title" }, "Treasurer and Safety Officer | Ultimate Frisbee B Team")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Managing team budgeting, equipment procurement, and player safety protocols")
+          h("li", null, "Managed budget, equipment procurement, and player safety protocols")
         ),
-        h("h4", { className: "resume-section" }, "Experience"),
+        h("h4", { className: "resume-section" }, "Other Experience"),
         h(
           "div",
           { className: "resume-row" },
@@ -463,45 +598,20 @@
           h("span", { className: "resume-date" }, "Jun 2024 - Aug 2025")
         ),
         h(
-          "ul",
-          { className: "resume-list" },
-          h("li", null, "Ensured public safety and smooth beach operations"),
-          h("li", null, "Led daily fitness training and emergency drills"),
-          h("li", null, "Conducted maintenance of facilities and beach area"),
-          h("li", null, "Recommended for promotion, Aug 2025")
-        ),
-        h(
           "div",
           { className: "resume-row" },
           h("span", { className: "resume-title" }, "Webmaster | ISSA Puget Sound"),
           h("span", { className: "resume-date" }, "Mar 2023 - Aug 2024")
         ),
-        h(
-          "ul",
-          { className: "resume-list" },
-          h("li", null, "Managed and maintained WordPress site for the Puget Sound chapter"),
-          h("li", null, "Implemented Board Member and Sponsor pages to support growth initiatives")
-        ),
-        h(
-          "div",
-          { className: "resume-row" },
-          h("span", { className: "resume-title" }, "Lifeguard | Mercer Island Country Club"),
-          h("span", { className: "resume-date" }, "Jun 2021 - Jun 2025")
-        ),
-        h(
-          "ul",
-          { className: "resume-list" },
-          h("li", null, "CPR/AED/Lifeguard certified June 2021; recertified 2023, Dec 2024"),
-          h("li", null, "Inspected pool equipment and facilities for safety compliance"),
-          h("li", null, "Coordinated operations with staff; accumulated 600+ hours")
-        ),
         h("h4", { className: "resume-section" }, "Technical Skills"),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Languages: Java, Python, HTML, CSS, C, Assembly"),
-          h("li", null, "Technologies: Steghide, Wireshark, Grafana, Hashcat, gdb, Cisco Packet Tracer, MS Office Suite, Wazuh, ELK (Elasticsearch, Logstash, Kibana), WordPress, ntopng, Influx Database, Pi-hole, Unbound, n8n, volatility3"),
-          h("li", null, "Certifications: GIAC GFACT, IT Specialist")
+          h("li", null, "Languages: Python, PowerShell, Java, C, HTML, Assembly (x86)"),
+          h("li", null, "Security Tools: Darktrace, Microsoft 365 Defender, Rapid7, Netwrix, ELK/Kibana, Wazuh, Wireshark, Volatility 3, Joe Sandbox"),
+          h("li", null, "Infrastructure: OPNsense, pfSense, Proxmox VE, Docker, Tailscale, Snipe-IT, Unbound, Grafana, n8n"),
+          h("li", null, "Certifications: Microsoft Certified: Azure Fundamentals (AZ-900), GIAC GFACT, IT Specialist"),
+          h("li", null, "Operating Systems: Windows 10/11, Windows Server 2022/2025, Rocky Linux 9, Ubuntu Server, Kali Linux")
         )
       )
     );
@@ -551,7 +661,8 @@
         "main",
         { className: "main" },
         h("div", { id: "top" }),
-        page === "home" ? h(React.Fragment, null, h(Hero), h(ProjectsStrip), h(About), h(Contact)) : null,
+        page === "home" ? h(React.Fragment, null, h(Hero), h(About), h(Contact)) : null,
+        page === "projects" ? h(Projects) : null,
         page === "writeups" ? h(Writeups) : null,
         page === "resume" ? h(Resume) : null
       ),
@@ -569,7 +680,7 @@
     if (!hash) return;
     const target = document.querySelector(hash);
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth", block: "start" });
       return;
     }
     if (attempt < 12) {
