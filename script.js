@@ -114,13 +114,10 @@
 
   const contactInfo = {
     emailUser: "brandon",
-    emailDomain: "wolfedwelling.com",
-    phoneDigits: ["206", "295", "2995"]
+    emailDomain: "wolfedwelling.com"
   };
 
   const getEmail = () => `${contactInfo.emailUser}@${contactInfo.emailDomain}`;
-  const getPhone = () => contactInfo.phoneDigits.join("");
-  const getPhoneDisplay = () => contactInfo.phoneDigits.join("-");
 
   const rippleText = (text, baseDelay = 0, offset = 0) =>
     text.split("").map((char, index) =>
@@ -491,9 +488,7 @@
             "a",
             { href: "https://www.linkedin.com/in/bmw-cyber/", target: "_blank", rel: "noopener noreferrer" },
             "LinkedIn"
-          ),
-          h("span", { className: "divider" }, "|"),
-          h("a", { href: `tel:+1${getPhone()}` }, getPhoneDisplay())
+          )
         ),
         h("h4", { className: "resume-section" }, "Objective"),
         h(

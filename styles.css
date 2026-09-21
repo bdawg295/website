@@ -33,20 +33,6 @@
   font-display: swap;
   src: url(fonts/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj42Vksj.woff2) format("woff2");
 }
-@font-face {
-  font-family: "Space Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(fonts/i7dPIFZifjKcF5UAWdDRUEY.woff2) format("woff2");
-}
-@font-face {
-  font-family: "Space Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(fonts/i7dMIFZifjKcF5UAWdDRaPpZYFI.woff2) format("woff2");
-}
 :root {
   --bg: #070a0f;
   --bg-2: #0c1320;
@@ -456,31 +442,6 @@ html {
   border: 1px solid rgba(0, 199, 255, 0.2);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.projects-strip .card {
-  min-height: 160px;
-}
-
-.projects-strip .card-grid {
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.projects-strip {
-  padding-top: 1.5rem;
-  padding-bottom: 2rem;
-}
-
-.projects-strip + .section {
-  padding-top: 2rem;
-}
-
-@media (max-width: 720px) {
-  .projects-strip .card-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .card h3 {
