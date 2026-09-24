@@ -323,6 +323,52 @@
         }
       ],
       stack: "Elasticsearch, Kibana, Fleet Server, Elastic Agent, Sysmon, Ubuntu Server, Windows, Heartbeat"
+    },
+    {
+      id: "pcrat-analysis",
+      title: "PCRat / Gh0stRAT Malware Analysis",
+      date: "April 2026 | CSEC 202 Reverse Engineering Project",
+      summary: "Static analysis, runtime observation, and debugging of a Windows RAT sample, examining persistence and payload-loading behavior.",
+      overview: "For my reverse engineering course, I analyzed a Windows executable with indicators consistent with a PCRat/Gh0stRAT variant. I combined PE inspection, disassembly, registry comparisons, network observation, and debugging to document its behavior and distinguish observed activity from capabilities identified in code.",
+      sections: [
+        {
+          title: "Static analysis",
+          text: "I inspected the executable's sections, imports, resources, and strings. Installer and overlay signatures, service-related APIs, and PCRat strings guided my analysis in IDA Pro. I identified command-line branching on a child argument, embedded-payload extraction, privilege-adjustment code, and routines for Active Setup and service-based persistence."
+        },
+        {
+          title: "Observed runtime behavior",
+          text: "I used ProcMon, Regshot, and Registry Editor to examine execution and registry changes. The sample created a PCRatStact service-related entry and an Active Setup StubPath value. ApateDNS captured a lookup for www[.]pc-rat[.]com, matching the static strings. I disabled external network access during testing, preventing the sample from communicating with remote infrastructure. A live command-and-control connection and persistence across logon were not tested."
+        },
+        {
+          title: "Payload loading and debugging",
+          text: "In IDA Pro, I identified code targeting iexplore.exe with a LoadLibrary-based remote-thread injection sequence. Using x32dbg, I confirmed command-line inspection, the child string check, and calls to file-creation and timing APIs. The debugger trace was partial: attempts to force the child execution path reached ExitProcess, and I did not confirm successful injection at runtime."
+        }
+      ],
+      stack: "IDA Pro, x32dbg, ProcMon, Regshot, ApateDNS, PEview, PEiD, Resource Hacker, Strings, VirusTotal",
+      images: [
+        {
+          src: "images/pcrat/dns-lookup.png",
+          alt: "ApateDNS capture showing a request for www.pc-rat.com with the return DNS address set to loopback.",
+          caption: "ApateDNS captured the sample's DNS lookup while external network access was disabled. This shows a lookup attempt, not a live C2 connection.",
+          width: 665,
+          height: 281
+        },
+        {
+          src: "images/pcrat/active-setup.png",
+          alt: "Registry Editor showing an Active Setup component with a StubPath value pointing to an executable in the Windows system directory.",
+          caption: "The Active Setup StubPath entry observed after execution. Persistence across logon was not tested.",
+          width: 899,
+          height: 517
+        },
+        {
+          src: "images/pcrat/injection-analysis.png",
+          compact: true,
+          alt: "IDA graph showing WriteProcessMemory followed by resolution of LoadLibraryA through GetModuleHandleA and GetProcAddress.",
+          caption: "Static analysis of the injection-related routine in IDA. The code shows WriteProcessMemory and LoadLibraryA resolution; successful injection was not confirmed at runtime.",
+          width: 1586,
+          height: 1181
+        }
+      ]
     }
   ];
 
@@ -400,6 +446,22 @@
           h("section", null,
             h("h3", { className: "resume-subhead" }, "Tools and platforms"),
             h("p", null, selected.stack)
+          ),
+          selected.images && h("section", { className: "project-gallery" },
+            h("h3", { className: "resume-subhead" }, "Analysis screenshots"),
+            h("p", { className: "section-sub" }, "Select an image to open it at full resolution in a new tab."),
+            selected.images.map((figure) => h("figure", {
+              key: figure.src,
+              className: figure.compact ? "project-figure-compact" : undefined
+            },
+              h("a", { href: figure.src, target: "_blank", rel: "noopener noreferrer" },
+                h("img", {
+                  src: figure.src, alt: figure.alt, width: figure.width, height: figure.height,
+                  loading: "lazy", decoding: "async"
+                })
+              ),
+              h("figcaption", null, figure.caption)
+            ))
           )
         )
       )
@@ -527,8 +589,7 @@
           h("li", null, "Investigated phishing and spoofed emails, analyzing sender authentication, links, attachments, and recipient exposure using Microsoft 365 Defender, Darktrace/Email, and Joe Sandbox"),
           h("li", null, "Audited privileged access, Active Directory groups, and security policies; authored four Netwrix Access Reviews playbooks supporting an enterprise rollout"),
           h("li", null, "Created 9 of 15 phishing simulation emails for a company-wide awareness campaign, coordinating scenario approvals and employee education"),
-          h("li", null, "Developed ES|QL queries and Kibana dashboard designs to improve security visibility across authentication, network, and alert telemetry"),
-          h("li", null, "Authored a technical business case for Darktrace SDK integration to automate threat intelligence workflows and expand ELK/Kibana visibility")
+          h("li", null, "Developed ES|QL queries and Kibana dashboard designs; researched Darktrace SDK integration to improve security visibility and automation")
         ),
         h("h4", { className: "resume-section", id: "resume-projects" }, "Projects"),
         h(
@@ -540,9 +601,20 @@
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Deployed OPNsense with Zenarmor for firewalling and deep packet inspection"),
-          h("li", null, "Configured Tailscale subnet routing for secure remote access and deployed Proxmox VE for virtualized Linux and Windows environments"),
-          h("li", null, "Deployed Snipe-IT using Docker on Ubuntu Server for centralized asset management")
+          h("li", null, "Deployed OPNsense with Zenarmor for firewalling and deep packet inspection; configured Unbound DNS and Tailscale subnet routing for secure remote access"),
+          h("li", null, "Deployed Proxmox VE for virtualized Windows and Linux environments and Docker-hosted Snipe-IT for centralized asset management")
+        ),
+        h(
+          "div",
+          { className: "resume-row resume-anchor", id: "resume-projects-malware" },
+          h("span", { className: "resume-title" }, "Gh0st RAT Malware Reverse Engineering | Academic Project"),
+          h("span", { className: "resume-date" }, "Spring 2026")
+        ),
+        h(
+          "ul",
+          { className: "resume-list" },
+          h("li", null, "Analyzed a Gh0st RAT malware sample using IDA, x32dbg, and Procmon to investigate execution behavior and malicious functionality"),
+          h("li", null, "Identified persistence mechanisms, privilege manipulation, and process injection through static and dynamic analysis")
         ),
         h(
           "div",
@@ -553,8 +625,7 @@
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Deployed an ELK SIEM environment with Elasticsearch, Kibana, and Elastic Agent across Windows and Linux hosts"),
-          h("li", null, "Ingested Windows Security, Sysmon, and Linux system logs to centralize endpoint security telemetry"),
+          h("li", null, "Deployed Elasticsearch, Kibana, and Elastic Agent across Windows and Linux hosts, centralizing Windows Security, Sysmon, and Linux system logs"),
           h("li", null, "Configured Kibana dashboards and alerting workflows to support security monitoring and event investigation")
         ),
         h("h4", { className: "resume-section" }, "Extracurriculars"),
@@ -603,10 +674,10 @@
           "ul",
           { className: "resume-list" },
           h("li", null, "Languages: Python, PowerShell, Java, C, HTML, Assembly (x86)"),
-          h("li", null, "Security Tools: Darktrace, Microsoft 365 Defender, Rapid7, Netwrix, ELK/Kibana, Wazuh, Wireshark, Volatility 3, Joe Sandbox"),
+          h("li", null, "Security Tools: Darktrace, Microsoft 365 Defender, Rapid7, Netwrix, ELK/Kibana, Wazuh, Wireshark, Volatility 3, Joe Sandbox, hashcat, x32dbg"),
           h("li", null, "Infrastructure: OPNsense, pfSense, Proxmox VE, Docker, Tailscale, Snipe-IT, Unbound, Grafana, n8n"),
           h("li", null, "Certifications: Microsoft Certified: Azure Fundamentals (AZ-900), GIAC GFACT, IT Specialist"),
-          h("li", null, "Operating Systems: Windows 10/11, Windows Server 2022/2025, Rocky Linux 9, Ubuntu Server, Kali Linux")
+          h("li", null, "Operating Systems: Windows 10/11, Windows Server 2022/2025, Rocky Linux 9, Ubuntu, Kali Linux")
         )
       )
     );
