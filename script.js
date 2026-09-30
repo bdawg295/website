@@ -607,14 +607,14 @@
         h(
           "div",
           { className: "resume-row resume-anchor", id: "resume-projects-malware" },
-          h("span", { className: "resume-title" }, "Gh0st RAT Malware Reverse Engineering | Academic Project"),
+          h("span", { className: "resume-title" }, "PCRat / Gh0stRAT Malware Analysis | Academic Project"),
           h("span", { className: "resume-date" }, "Spring 2026")
         ),
         h(
           "ul",
           { className: "resume-list" },
-          h("li", null, "Analyzed a Gh0st RAT malware sample using IDA, x32dbg, and Procmon to investigate execution behavior and malicious functionality"),
-          h("li", null, "Identified persistence mechanisms, privilege manipulation, and process injection through static and dynamic analysis")
+          h("li", null, "Analyzed a Windows RAT sample with indicators consistent with a PCRat/Gh0stRAT variant using IDA, x32dbg, and ProcMon; observed Active Setup StubPath and service-related entries, but persistence across logon was not tested"),
+          h("li", null, "Identified privilege-adjustment code and a LoadLibrary-based remote-thread injection sequence targeting iexplore.exe through static analysis; successful injection was not confirmed at runtime")
         ),
         h(
           "div",
